@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWL Pic | Build The Look</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <a href="#" class="brand">
+            <img src="images/OWL Pic Logo-01.png" alt="OWL Pic Logo"
+                 onerror="this.style.display='none'">
+            <span>OWL PIC</span>
+        </a>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#voting">Build the Look</a>
+            <a href="#music">Music</a>
+            <a href="#winners">Winners</a>
+        </nav>
+    </header>
+
+    <main id="home">
+        <section class="hero">
+            <p class="eyebrow">FASHION • MUSIC • SPORTS • CULTURE</p>
+            <h1>BUILD THE LOOK</h1>
+            <p>Vote for your favorites. The most-liked items create the winning look!</p>
+        </section>
+
+        <div class="page-layout" id="voting">
+            <section class="voting-area">
+                <div class="section-heading">
+                    <h2>CAST YOUR VOTE</h2>
+                    <p>Choose your favorites in every category.</p>
+                </div>
+
+                <div id="categories" class="category-grid">
+                    <!-- JavaScript adds the voting categories here -->
+                </div>
+            </section>
+
+            <aside class="winner-panel" id="winners">
+                <div class="winner-heading">
+                    <span>🏆</span>
+                    <div>
+                        <h2>YOUR WINNING LOOK</h2>
+                        <p>Powered by your votes</p>
+                    </div>
+                </div>
+
+                <div id="winning-look" class="winning-look">
+                    <!-- JavaScript adds the winning items here -->
+                </div>
+
+                <div class="total-votes" id="total-votes">
+                    Total votes: 0
+                </div>
+            </aside>
+        </div>
+
+        <section class="music-section" id="music">
+            <div class="section-heading">
+                <h2>♫ MUSIC</h2>
+                <p>Vote for your favorite artist or song!</p>
+            </div>
+
+            <div id="music-list" class="music-grid">
+                <!-- JavaScript adds music voting cards here -->
+            </div>
+        </section>
+
+        <footer>
+            <h2>OWL PIC</h2>
+            <p>Fashion. Music. Sports. Culture.</p>
+            <p class="hashtag">#BuildTheLook</p>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
