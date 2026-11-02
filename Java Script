@@ -185,7 +185,7 @@ function displayCategories() {
 
                             <button
                                 class="vote-button"
-                                onclick="voteForProduct('category.id','{item.id}')"
+                                onclick="voteForProduct('${category.id}', '${item.id}')"
                             >
                                 ${alreadyVoted ? "✓ Voted" : "❤️ Vote"}
                             </button>
