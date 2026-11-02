@@ -1,0 +1,389 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #08070c;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.topbar {
+    min-height: 85px;
+    padding: 15px 4%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: #050407;
+    border-bottom: 1px solid #7130a8;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 27px;
+    font-weight: 900;
+    font-style: italic;
+}
+
+.brand img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #d15aff;
+}
+
+.hero {
+    text-align: center;
+    padding: 55px 20px 35px;
+    background: radial-gradient(ellipse at center, #35104f 0%, #100b18 55%, #08070c 100%);
+}
+
+.eyebrow {
+    color: #d15aff;
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 7vw, 76px);
+    font-weight: 900;
+    font-style: italic;
+    margin: 12px 0;
+    text-shadow: 0 0 20px #a72bff;
+}
+
+.hero p:last-child {
+    color: #d5c8df;
+    font-size: 16px;
+}
+
+.page-layout {
+    width: 94%;
+    max-width: 1500px;
+    margin: 35px auto;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(270px, 0.9fr);
+    gap: 25px;
+    align-items: start;
+}
+
+.section-heading {
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    color: #d15aff;
+    font-size: 25px;
+    margin-bottom: 7px;
+}
+
+.section-heading p {
+    color: #aaa0b5;
+    font-size: 14px;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.category-card {
+    background: linear-gradient(145deg, #191521, #0c0a10);
+    border: 1px solid #9c39e8;
+    border-radius: 13px;
+    padding: 16px;
+    box-shadow: 0 0 12px #5e1b8733;
+}
+
+.category-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.category-icon {
+    font-size: 27px;
+}
+
+.category-title h3 {
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.category-title p {
+    color: #aaa0b5;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.product-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.product {
+    min-width: 0;
+    text-align: center;
+    background: #100d16;
+    border: 1px solid #393044;
+    border-radius: 10px;
+    padding: 10px 5px;
+    transition: 0.2s;
+}
+
+.product.selected {
+    border: 2px solid #d15aff;
+    box-shadow: 0 0 15px #a72bff;
+}
+
+.product-image {
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    overflow: hidden;
+}
+
+.product-image img {
+    max-width: 100%;
+    max-height: 85px;
+    object-fit: contain;
+}
+
+.product h4 {
+    font-size: 12px;
+    margin: 8px 0;
+    overflow-wrap: anywhere;
+}
+
+.vote-count {
+    color: #ff4d91;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.vote-button {
+    background: #7620b5;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 7px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+.vote-button:hover {
+    background: #b13cff;
+}
+
+.vote-button:disabled {
+    opacity: 0.7;
+    cursor: default;
+}
+
+.winner-panel {
+    background: linear-gradient(160deg, #24102f, #0c0911);
+    border: 2px solid #b33cff;
+    border-radius: 15px;
+    padding: 20px;
+    position: sticky;
+    top: 15px;
+    box-shadow: 0 0 20px #8b22c444;
+}
+
+.winner-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.winner-heading span {
+    font-size: 30px;
+}
+
+.winner-heading h2 {
+    font-size: 17px;
+}
+
+.winner-heading p {
+    color: #c5a5d8;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.winning-look {
+    display: grid;
+    gap: 10px;
+}
+
+.winning-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: #100b18;
+    border-radius: 9px;
+    border: 1px solid #4b2861;
+}
+
+.winning-item .product-image {
+    width: 65px;
+    height: 60px;
+    flex-shrink: 0;
+    font-size: 35px;
+}
+
+.winning-item .product-image img {
+    max-height: 60px;
+}
+
+.winning-item h4 {
+    font-size: 13px;
+}
+
+.winning-item p {
+    color: #bca8c8;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.total-votes {
+    color: #e0b4ff;
+    border-top: 1px solid #58336d;
+    margin-top: 18px;
+    padding-top: 15px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.music-section {
+    width: 94%;
+    max-width: 1500px;
+    margin: 50px auto;
+    padding: 22px;
+    background: #100d16;
+    border: 1px solid #9635d5;
+    border-radius: 15px;
+}
+
+.music-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.music-card {
+    background: #1a1421;
+    border: 1px solid #483157;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.music-card h3 {
+    margin-bottom: 7px;
+}
+
+.music-card p {
+    color: #bba9c7;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.music-card .vote-count {
+    margin: 12px 0;
+}
+
+.music-card .vote-button {
+    width: auto;
+    padding: 8px 20px;
+}
+
+.music-note {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+footer {
+    border-top: 1px solid #52266e;
+    padding: 30px 20px;
+    text-align: center;
+    background: #050407;
+}
+
+footer h2 {
+    font-size: 26px;
+    font-style: italic;
+}
+
+footer p {
+    color: #aaa0b5;
+    margin-top: 8px;
+}
+
+footer .hashtag {
+    color: #d15aff;
+    font-weight: bold;
+}
+
+@media (max-width: 850px) {
+    .page-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .winner-panel {
+        position: static;
+    }
+}
+
+@media (max-width: 600px) {
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .music-grid {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        gap: 13px;
+        font-size: 13px;
+    }
+
+    .hero {
+        padding: 40px 15px;
+    }
+}
