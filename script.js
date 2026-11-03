@@ -216,9 +216,10 @@ function voteForProduct(categoryId, productId) {
     votes[productId] = (votes[productId] || 0) + 1;
     selectedVotes[categoryId] = productId;
 
-    saveVotes();
-    displayCategories();
-    displayWinningLook();
+   saveVotes();
+displayCategories();
+displayWinningLook();
+displayOutfitPreview();
 }
 
 // Find the most-liked item in a category.
