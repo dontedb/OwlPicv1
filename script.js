@@ -269,6 +269,35 @@ function displayWinningLook() {
         `Total votes: ${total}`;
 }
 
+function displayOutfitPreview() {
+    const container = document.getElementById("outfit-preview-items");
+
+    container.innerHTML = "";
+
+    categories.forEach(category => {
+        const selectedProductId = selectedVotes[category.id];
+
+        if (!selectedProductId) return;
+
+        const product = findProduct(selectedProductId);
+
+        if (!product) return;
+
+        const item = document.createElement("div");
+
+        item.className = `outfit-item outfit-${category.id}`;
+
+        item.innerHTML = `
+            <div class="outfit-product-image">
+                ${imageHTML(product)}
+            </div>
+            <p>${product.name}</p>
+        `;
+
+        container.appendChild(item);
+    });
+}
+
 // Display music voting cards.
 function displayMusic() {
     const container = document.getElementById("music-list");
