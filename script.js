@@ -353,6 +353,8 @@ function voteForSong(songId) {
 }
 
 // Start the website.
+// Start the website.
 displayCategories();
 displayWinningLook();
+displayOutfitPreview();
 displayMusic();
