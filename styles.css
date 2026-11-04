@@ -496,6 +496,15 @@ footer .hashtag {
     }
 
     .outfit-item p {
+        /* BUILD THE LOOK OWL LOGO */
+
+.build-logo {
+    display: block;
+    width: 150px;
+    height: auto;
+    margin: 0 auto 20px;
+    object-fit: contain;
+}
         font-size: 10px;
     }
 }
