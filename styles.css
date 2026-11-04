@@ -500,12 +500,9 @@ footer .hashtag {
 
 .build-logo {
     display: block;
-    width: 150px;
+    width: 100px;
     height: auto;
-    margin: 0 auto 20px;
+    margin: 0 auto 15px;
     object-fit: contain;
-}
-        font-size: 10px;
-    }
 }
 
