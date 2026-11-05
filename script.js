@@ -370,3 +370,30 @@ const supabaseClient = window.supabase.createClient(
 );
 
 console.log("OWL PIC connected to Supabase!");
+
+// OWL PIC - CREATE ACCOUNT
+
+document.getElementById("signup-form")?.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById("display-name").value;
+    const email = document.getElementById("signup-email").value;
+    const password = document.getElementById("signup-password").value;
+
+    const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+            data: {
+                username: username
+            }
+        }
+    });
+
+    if (error) {
+        alert(error.message);
+    } else {
+        alert("Welcome to OWL PIC! Check your email to confirm your account.");
+        console.log(data);
+    }
+});
