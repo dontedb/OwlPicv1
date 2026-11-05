@@ -207,7 +207,36 @@ container.innerHTML = "";
 // They can change their vote later.
 // REQUIRE LOGIN BEFORE PRODUCT VOTING
 
+// REQUIRE LOGIN BEFORE PRODUCT VOTING
+
 async function voteForProduct(categoryId, productId) {
+
+    const loggedIn = await checkUserLogin();
+
+    if (!loggedIn) return;
+
+    const previousVote = selectedVotes[categoryId];
+
+    if (previousVote === productId) {
+        return;
+    }
+
+    if (previousVote) {
+        votes[previousVote] = Math.max(
+            0,
+            (votes[previousVote] || 0) - 1
+        );
+    }
+
+    votes[productId] = (votes[productId] || 0) + 1;
+
+    selectedVotes[categoryId] = productId;
+
+    saveVotes();
+    displayCategories();
+    displayWinningLook();
+    displayOutfitPreview();
+}
 
     const loggedIn = await checkUserLogin();
 
