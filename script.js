@@ -241,8 +241,11 @@ function getWinner(category) {
 
 // Display the winning item from every category.
 function displayWinningLook() {
-    const container = document.getElementById("winning-look");
-    container.innerHTML = "";
+   const container = document.getElementById("winning-look");
+
+if (!container) return;
+
+container.innerHTML = "";
 
     categories.forEach(category => {
         const winner = getWinner(category);
