@@ -312,6 +312,9 @@ function displayOutfitPreview() {
 // Display music voting cards.
 function displayMusic() {
     const container = document.getElementById("music-list");
+
+    if (!container) return;
+
     container.innerHTML = "";
 
     songs.forEach(song => {
