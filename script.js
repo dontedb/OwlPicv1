@@ -358,3 +358,15 @@ displayCategories();
 displayWinningLook();
 displayOutfitPreview();
 displayMusic();
+// OWL PIC - SUPABASE CONNECTION
+
+const SUPABASE_URL = "https://djustjxfcfexlysqgdyq.supabase.co";
+
+const SUPABASE_ANON_KEY = "https://djustjxfcfexlysqgdyq.supabase.co";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+console.log("OWL PIC connected to Supabase!");
