@@ -397,3 +397,26 @@ document.getElementById("signup-form")?.addEventListener("submit", async functio
         console.log(data);
     }
 });
+// OWL PIC - SIGN IN EXISTING USER
+
+document.getElementById("signin-form")?.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        alert(error.message);
+    } else {
+        alert("Welcome back to OWL PIC!");
+
+        console.log("User signed in:", data.user);
+
+        window.location.href = "index.html";
+    }
+});
