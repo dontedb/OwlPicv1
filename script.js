@@ -279,6 +279,10 @@ container.innerHTML = "";
 function displayOutfitPreview() {
     const container = document.getElementById("outfit-preview-items");
 
+    if (!container) return;
+
+    container.innerHTML = "";
+
     container.innerHTML = "";
 
     categories.forEach(category => {
