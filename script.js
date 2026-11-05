@@ -205,7 +205,36 @@ container.innerHTML = "";
 // Vote for a product.
 // A visitor gets one active vote per category.
 // They can change their vote later.
-function voteForProduct(categoryId, productId) {
+// REQUIRE LOGIN BEFORE PRODUCT VOTING
+
+async function voteForProduct(categoryId, productId) {
+
+    const loggedIn = await checkUserLogin();
+
+    if (!loggedIn) return;
+
+    const previousVote = selectedVotes[categoryId];
+
+    if (previousVote === productId) {
+        return;
+    }
+
+    if (previousVote) {
+        votes[previousVote] = Math.max(
+            0,
+            (votes[previousVote] || 0) - 1
+        );
+    }
+
+    votes[productId] = (votes[productId] || 0) + 1;
+
+    selectedVotes[categoryId] = productId;
+
+    saveVotes();
+    displayCategories();
+    displayWinningLook();
+    displayOutfitPreview();
+}
     const previousVote = selectedVotes[categoryId];
 
     if (previousVote === productId) {
@@ -346,7 +375,33 @@ function displayMusic() {
 }
 
 // One active music vote per visitor in this browser.
-function voteForSong(songId) {
+// REQUIRE LOGIN BEFORE MUSIC VOTING
+
+async function voteForSong(songId) {
+
+    const loggedIn = await checkUserLogin();
+
+    if (!loggedIn) return;
+
+    if (selectedSong === songId) {
+        return;
+    }
+
+    if (selectedSong) {
+        musicVotes[selectedSong] = Math.max(
+            0,
+            (musicVotes[selectedSong] || 0) - 1
+        );
+    }
+
+    musicVotes[songId] =
+        (musicVotes[songId] || 0) + 1;
+
+    selectedSong = songId;
+
+    saveVotes();
+    displayMusic();
+}
     if (selectedSong === songId) {
         return;
     }
@@ -383,7 +438,27 @@ const supabaseClient = window.supabase.createClient(
 );
 
 console.log("OWL PIC connected to Supabase!");
+// OWL PIC - CHECK USER LOGIN
 
+async function checkUserLogin() {
+    const { data: { user } } =
+        await supabaseClient.auth.getUser();
+
+    if (!user) {
+        const returnTo =
+            window.location.pathname +
+            window.location.search +
+            window.location.hash;
+
+        window.location.href =
+            "auth.html?returnTo=" +
+            encodeURIComponent(returnTo);
+
+        return false;
+    }
+
+    return true;
+}
 // OWL PIC - CREATE ACCOUNT
 
 document.getElementById("signup-form")?.addEventListener("submit", async function(event) {
@@ -430,6 +505,13 @@ document.getElementById("signin-form")?.addEventListener("submit", async functio
 
         console.log("User signed in:", data.user);
 
-        window.location.href = "index.html";
+        const returnTo =
+    new URLSearchParams(window.location.search)
+    .get("returnTo");
+
+window.location.href =
+    returnTo && returnTo.startsWith("/")
+        ? returnTo
+        : "index.html";
     }
 });
