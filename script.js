@@ -362,7 +362,7 @@ displayMusic();
 
 const SUPABASE_URL = "https://djustjxfcfexlysqgdyq.supabase.co";
 
-const SUPABASE_ANON_KEY = "https://djustjxfcfexlysqgdyq.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_uo5uRAaC1mCk1txpLXPCOQ_47T7qk2A";
 
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
