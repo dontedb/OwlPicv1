@@ -151,7 +151,10 @@ function imageHTML(item) {
 // Create the category voting cards.
 function displayCategories() {
     const container = document.getElementById("categories");
-    container.innerHTML = "";
+
+if (!container) return;
+
+container.innerHTML = "";
 
     categories.forEach(category => {
         const card = document.createElement("div");
