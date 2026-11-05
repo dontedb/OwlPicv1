@@ -387,23 +387,7 @@ async function voteForSong(songId) {
     saveVotes();
     displayMusic();
 }
-    if (selectedSong === songId) {
-        return;
-    }
-
-    if (selectedSong) {
-        musicVotes[selectedSong] = Math.max(
-            0,
-            (musicVotes[selectedSong] || 0) - 1
-        );
-    }
-
-    musicVotes[songId] = (musicVotes[songId] || 0) + 1;
-    selectedSong = songId;
-
-    saveVotes();
-    displayMusic();
-}
+   
 
 // Start the website.
 // Start the website.
