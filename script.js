@@ -238,51 +238,7 @@ async function voteForProduct(categoryId, productId) {
     displayOutfitPreview();
 }
 
-    const loggedIn = await checkUserLogin();
-
-    if (!loggedIn) return;
-
-    const previousVote = selectedVotes[categoryId];
-
-    if (previousVote === productId) {
-        return;
-    }
-
-    if (previousVote) {
-        votes[previousVote] = Math.max(
-            0,
-            (votes[previousVote] || 0) - 1
-        );
-    }
-
-    votes[productId] = (votes[productId] || 0) + 1;
-
-    selectedVotes[categoryId] = productId;
-
-    saveVotes();
-    displayCategories();
-    displayWinningLook();
-    displayOutfitPreview();
-}
-    const previousVote = selectedVotes[categoryId];
-
-    if (previousVote === productId) {
-        return;
-    }
-
-    if (previousVote) {
-        votes[previousVote] = Math.max(0, (votes[previousVote] || 0) - 1);
-    }
-
-    votes[productId] = (votes[productId] || 0) + 1;
-    selectedVotes[categoryId] = productId;
-
-   saveVotes();
-displayCategories();
-displayWinningLook();
-displayOutfitPreview();
-}
-
+  
 // Find the most-liked item in a category.
 // If there is a tie, the first item in the list wins.
 function getWinner(category) {
