@@ -35,104 +35,97 @@
             <p>Vote for your favorites. The most-liked items create the winning look!</p>
                 </section>
 
-        <!-- MY CLOSET SECTION -->
-        <section class="my-closet-section" id="my-closet">
-            <div class="section-heading">
-                <h2>MY CLOSET</h2>
-                <p>Upload your favorite clothing and let the community help build your look.</p>
-            </div>
-
-            <div class="closet-upload-area">
-                <div class="closet-upload-area">
-    <h3>ADD TO YOUR CLOSET</h3>
-    <p>Upload clothing for your followers to see and vote on.</p>
-
-    <form id="closet-upload-form">
-
-        <label for="clothing-name">Clothing Name</label>
-        <input
-            type="text"
-            id="clothing-name"
-            placeholder="Example: Purple Graphic Tee"
-            required
-        >
-
-        <label for="clothing-category">Category</label>
-        <select id="clothing-category" required>
-            <option value="">Choose a category</option>
-            <option value="shirts">Shirts</option>
-            <option value="jackets">Jackets</option>
-            <option value="pants">Pants</option>
-            <option value="shorts">Shorts</option>
-            <option value="hats">Hats</option>
-            <option value="shoes">Shoes</option>
-            <option value="socks">Socks</option>
-            <option value="other">Other</option>
-        </select>
-
-        <label for="clothing-photo">Clothing Photo</label>
-        <input
-            type="file"
-            id="clothing-photo"
-            accept="image/*"
-            required
-        >
-
-        <button type="submit">
-            UPLOAD TO MY CLOSET
-        </button>
-
-    </form>
-</div>
-
-                <div id="categories" class="category-grid">
-                    <!-- JavaScript adds the voting categories here -->
-                </div>
-            </section>
-
-            <aside class="winner-panel" id="winners">
-                <div class="winner-heading">
-                    <span>🏆</span>
-                    <div>
-                        <h2>YOUR WINNING LOOK</h2>
-                        <p>Powered by your votes</p>
-                    </div>
-                </div>
-
-                <div id="winning-look" class="winning-look">
-    <!-- JavaScript adds the winning items here -->
-</div>
-
-<div class="outfit-preview">
-    <h2>YOUR COMPLETE OUTFIT</h2>
-
-    <div id="outfit-preview-items" class="outfit-grid">
+        
+<!-- MY CLOSET SECTION -->
+<section class="my-closet-section" id="my-closet">
+    <div class="section-heading">
+        <h2>MY CLOSET</h2>
+        <p>Upload your favorite clothing and let the community help build your look.</p>
     </div>
-</div>
-<!-- JavaScript adds the winning items here -->
-                
 
-                <div class="total-votes" id="total-votes">
-                    Total votes: 0
-                </div>
-            </aside>
+    <div class="closet-upload-area">
+        <h3>ADD TO YOUR CLOSET</h3>
+        <p>Upload clothing for your followers to see and vote on.</p>
+
+        <form id="closet-upload-form">
+            <label for="clothing-name">Clothing Name</label>
+            <input type="text" id="clothing-name"
+                placeholder="Example: Purple Graphic Tee" required>
+
+            <label for="clothing-category">Category</label>
+            <select id="clothing-category" required>
+                <option value="">Choose a category</option>
+                <option value="shirts">Shirts</option>
+                <option value="jackets">Jackets</option>
+                <option value="pants">Pants</option>
+                <option value="shorts">Shorts</option>
+                <option value="hats">Hats</option>
+                <option value="shoes">Shoes</option>
+                <option value="socks">Socks</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="clothing-photo">Clothing Photo</label>
+            <input type="file" id="clothing-photo"
+                accept="image/*" required>
+
+            <button type="submit">UPLOAD TO MY CLOSET</button>
+        </form>
+    </div>
+
+    <div id="my-closet-items" class="closet-grid">
+        <!-- JavaScript displays uploaded clothing here -->
+    </div>
+</section>
+<!-- END MY CLOSET SECTION -->
+
+<!-- BUILD THE LOOK SECTION -->
+<section class="page-layout" id="voting">
+
+    <div id="categories" class="category-grid">
+        <!-- JavaScript adds voting categories here -->
+    </div>
+
+    <aside class="winner-panel" id="winners">
+        <div class="winner-heading">
+            <span>🏆</span>
+            <div>
+                <h2>YOUR WINNING LOOK</h2>
+                <p>Powered by your votes</p>
+            </div>
         </div>
 
-        <section class="music-section" id="music">
-            <div class="section-heading">
-                <h2>♫ MUSIC</h2>
-                <p>Vote for your favorite artist or song!</p>
-            </div>
+        <div id="winning-look" class="winning-look">
+            <!-- JavaScript adds winning items here -->
+        </div>
 
-            <div id="music-list" class="music-grid">
-                <!-- JavaScript adds music voting cards here -->
+        <div class="outfit-preview">
+            <h2>YOUR COMPLETE OUTFIT</h2>
+            <div id="outfit-preview-items" class="outfit-grid">
             </div>
-        </section>
+        </div>
 
-        <footer>
-            <h2>OWL PIC</h2>
-            <p>Fashion. Music. Sports. Culture.</p>
-            <p class="hashtag">#BuildTheLook</p>
+        <div class="total-votes" id="total-votes">
+            Total votes: 0
+        </div>
+    </aside>
+
+</section>
+<!-- END BUILD THE LOOK SECTION -->
+
+<!-- MUSIC SECTION -->
+<section class="music-section" id="music">
+    <div class="section-heading">
+        <h2>♫ MUSIC</h2>
+        <p>Vote for your favorite artist or song!</p>
+    </div>
+
+    <div id="music-list" class="music-grid">
+        <!-- JavaScript adds music voting cards here -->
+    </div>
+</section>
+<!-- END MUSIC SECTION -->
+
         </footer>
     </main>
 
