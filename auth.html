@@ -1,22 +1,185 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OWL PIC | Sign In / Sign Up</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #08070c;
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            border-bottom: 1px solid #7130a8;
+            background: #100d16;
+        }
+
+        .auth-logo {
+            width: 180px;
+            max-width: 80%;
+            height: auto;
+            margin-bottom: 12px;
+        }
+
+        header h1 {
+            color: #c58aff;
+            letter-spacing: 5px;
+            font-size: 30px;
+        }
+
+        header p {
+            color: #ccc;
+            margin-top: 10px;
+            letter-spacing: 2px;
+            font-size: 13px;
+        }
+
+        main {
+            width: 92%;
+            max-width: 520px;
+            margin: 35px auto;
+        }
+
+        section {
+            background: #100d16;
+            border: 1px solid #9635d5;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 20px rgba(150, 53, 213, 0.12);
+        }
+
+        section h2 {
+            color: #d5a5ff;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        section h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        label {
+            color: #d8b5ff;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #7130a8;
+            border-radius: 8px;
+            background: #08070c;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #c58aff;
+            box-shadow: 0 0 8px rgba(197, 138, 255, 0.4);
+        }
+
+        button {
+            padding: 14px;
+            margin-top: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #7130a8, #a33be0);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            box-shadow: 0 0 15px rgba(163, 59, 224, 0.6);
+            transform: translateY(-2px);
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #c58aff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: white;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #7130a8;
+            margin: 25px 0;
+        }
+
+        #social-login button {
+            width: 100%;
+            margin-top: 10px;
+            background: #1b1524;
+            border: 1px solid #7130a8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #aaa;
+            border-top: 1px solid #7130a8;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            section {
+                padding: 22px 18px;
+            }
+
+            header p {
+                font-size: 11px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <header>
+        <img
+            src="images/Regal Purple Owl Graffiti Logo.png"
+            alt="OWL PIC Logo"
+            class="auth-logo"
+        >
         <h1>OWL PIC</h1>
-        <p>Fashion • Music • Sports • Culture</p>
+        <p>FASHION • MUSIC • SPORTS • CULTURE</p>
     </header>
 
     <main>
 
         <section id="signin">
-            <h2>Welcome Back!</h2>
+            <h2>WELCOME BACK!</h2>
             <h3>Sign In</h3>
 
             <form id="signin-form">
@@ -34,10 +197,8 @@
             <p><a href="#">Forgot Password?</a></p>
         </section>
 
-        <hr>
-
         <section id="signup">
-            <h2>Join OWL PIC</h2>
+            <h2>JOIN OWL PIC</h2>
             <h3>Create Your Account</h3>
 
             <form id="signup-form">
@@ -57,15 +218,11 @@
             </form>
         </section>
 
-        <hr>
-
         <section id="social-login">
-            <h3>Or Continue With</h3>
+            <h3>OR CONTINUE WITH</h3>
 
             <button type="button">Continue with Facebook</button>
-
             <button type="button">Continue with Instagram</button>
-
             <button type="button">Continue with TikTok</button>
         </section>
 
@@ -74,7 +231,9 @@
     <footer>
         <p>OWL PIC — If You Got The Look, Show The World.</p>
     </footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+
 </body>
 </html>
