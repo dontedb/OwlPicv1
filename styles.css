@@ -728,3 +728,77 @@ footer .hashtag {
         height: 145px;
     }
 }
+
+
+
+/* =================================
+   OWL PIC - FUTURISTIC MUSIC ZONE
+================================= */
+
+.music-section {
+    background:
+        radial-gradient(ellipse at top right, #35104f 0%, transparent 48%),
+        linear-gradient(145deg, #17101f, #08070c);
+    border: 1px solid #9635d5;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(155, 77, 255, 0.16);
+}
+
+.music-section .section-heading {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.music-section .section-heading h2 {
+    font-size: clamp(26px, 4vw, 36px);
+    letter-spacing: 3px;
+    text-shadow: 0 0 15px #a72bff;
+}
+
+.music-section .section-heading p {
+    color: #c8b5d8;
+}
+
+.music-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.music-card {
+    background: linear-gradient(145deg, #24152f, #0c0911);
+    border: 1px solid #7130a8;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 0 14px rgba(155, 77, 255, 0.12);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.music-card:hover {
+    transform: translateY(-4px);
+    border-color: #d15aff;
+    box-shadow: 0 0 20px rgba(209, 90, 255, 0.25);
+}
+
+.music-card h3 {
+    color: #f1d9ff;
+}
+
+.music-card .vote-count {
+    color: #d98aff;
+}
+
+.music-card .vote-button {
+    background: linear-gradient(100deg, #7022b5, #bd42ed);
+    border: 1px solid #d98aff;
+    border-radius: 8px;
+}
+
+.music-card .vote-button:hover {
+    box-shadow: 0 0 16px rgba(209, 90, 255, 0.5);
+}
+
+@media (max-width: 600px) {
+    .music-section {
+        padding: 18px;
+    }
+}
