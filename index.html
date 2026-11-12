@@ -43,26 +43,47 @@
             </div>
 
             <div class="closet-upload-area">
-                <h3>ADD TO YOUR CLOSET</h3>
-                <p>Your clothing collection starts here.</p>
+                <div class="closet-upload-area">
+    <h3>ADD TO YOUR CLOSET</h3>
+    <p>Upload clothing for your followers to see and vote on.</p>
 
-                <button type="button" id="open-closet-upload">
-                    + ADD CLOTHING
-                </button>
-            </div>
+    <form id="closet-upload-form">
 
-            <div id="my-closet-items" class="closet-grid">
-                <!-- JavaScript will display uploaded clothing here -->
-            </div>
-        </section>
-        <!-- END MY CLOSET SECTION -->
+        <label for="clothing-name">Clothing Name</label>
+        <input
+            type="text"
+            id="clothing-name"
+            placeholder="Example: Purple Graphic Tee"
+            required
+        >
 
-        <div class="page-layout" id="voting">
-            <section class="voting-area">
-                <div class="section-heading">
-                    <h2>CAST YOUR VOTE</h2>
-                    <p>Choose your favorites in every category.</p>
-                </div>
+        <label for="clothing-category">Category</label>
+        <select id="clothing-category" required>
+            <option value="">Choose a category</option>
+            <option value="shirts">Shirts</option>
+            <option value="jackets">Jackets</option>
+            <option value="pants">Pants</option>
+            <option value="shorts">Shorts</option>
+            <option value="hats">Hats</option>
+            <option value="shoes">Shoes</option>
+            <option value="socks">Socks</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="clothing-photo">Clothing Photo</label>
+        <input
+            type="file"
+            id="clothing-photo"
+            accept="image/*"
+            required
+        >
+
+        <button type="submit">
+            UPLOAD TO MY CLOSET
+        </button>
+
+    </form>
+</div>
 
                 <div id="categories" class="category-grid">
                     <!-- JavaScript adds the voting categories here -->
