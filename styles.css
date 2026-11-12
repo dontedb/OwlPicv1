@@ -486,12 +486,12 @@ footer .hashtag {
 /* BUILD THE LOOK OWL LOGO */
 .build-logo {
     display: block;
-    width: 100px;
+    width: 100%;
+    max-width: 350px;
     height: auto;
-    margin: 0 auto 15px;
+    margin: 20px auto;
     object-fit: contain;
 }
-
 /* OWL PIC - MOBILE OUTFIT LAYOUT */
 @media (max-width: 600px) {
     .outfit-grid {
