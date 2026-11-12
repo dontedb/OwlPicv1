@@ -487,7 +487,7 @@ footer .hashtag {
 .build-logo {
     display: block;
     width: 100%;
-    max-width: 350px;
+    max-width: 450px;
     height: auto;
     margin: 20px auto;
     object-fit: contain;
