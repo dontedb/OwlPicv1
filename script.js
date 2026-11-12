@@ -484,3 +484,252 @@ window.location.href =
         : "index.html";
     }
 });
+
+
+
+// =====================================
+// OWL PIC - MY CLOSET UPLOAD SYSTEM
+// =====================================
+
+// Find the user's closet or create one.
+async function getOrCreateUserCloset(userId) {
+    const { data: existingCloset, error } =
+        await supabaseClient
+            .from("closets")
+            .select("id")
+            .eq("owner_id", userId)
+            .order("created_at", { ascending: false })
+            .limit(1)
+            .maybeSingle();
+
+    if (error) throw error;
+
+    if (existingCloset) {
+        return existingCloset;
+    }
+
+    const { data: newCloset, error: createError } =
+        await supabaseClient
+            .from("closets")
+            .insert({
+                owner_id: userId,
+                title: "My Closet",
+                description: "My OWL PIC clothing collection",
+                status: "open"
+            })
+            .select("id")
+            .single();
+
+    if (createError) throw createError;
+
+    return newCloset;
+}
+
+
+// Upload clothing when the form is submitted.
+document.getElementById("closet-upload-form")
+    ?.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const loggedIn = await checkUserLogin();
+
+        if (!loggedIn) return;
+
+        const { data: { user }, error: userError } =
+            await supabaseClient.auth.getUser();
+
+        if (userError || !user) {
+            alert("Please sign in before uploading clothing.");
+            return;
+        }
+
+        const name =
+            document.getElementById("clothing-name").value.trim();
+
+        const category =
+            document.getElementById("clothing-category").value;
+
+        const file =
+            document.getElementById("clothing-photo").files[0];
+
+        if (!name || !category || !file) {
+            alert("Please complete all fields and select a photo.");
+            return;
+        }
+
+        if (!file.type.startsWith("image/")) {
+            alert("Please select an image file.");
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            alert("Please choose an image smaller than 5 MB.");
+            return;
+        }
+
+        const form = event.currentTarget;
+        const button = form.querySelector('button[type="submit"]');
+
+        button.disabled = true;
+        button.textContent = "UPLOADING...";
+
+        let uploadedPath = null;
+
+        try {
+            // Find or create this user's closet.
+            const closet = await getOrCreateUserCloset(user.id);
+
+            // Prepare a unique image filename.
+            const extension =
+                file.name.split(".").pop().toLowerCase()
+                    .replace(/[^a-z0-9]/g, "") || "jpg";
+
+            const fileName =
+                Date.now() + "-" +
+                Math.random().toString(36).slice(2) +
+                "." + extension;
+
+            // Save the image in the private Supabase bucket.
+            uploadedPath =
+                `${user.id}/${closet.id}/${fileName}`;
+
+            const { error: uploadError } =
+                await supabaseClient.storage
+                    .from("closet-images")
+                    .upload(uploadedPath, file, {
+                        cacheControl: "3600",
+                        upsert: false,
+                        contentType: file.type
+                    });
+
+            if (uploadError) throw uploadError;
+
+            // Save the clothing details in the database.
+            const { error: itemError } =
+                await supabaseClient
+                    .from("closet_items")
+                    .insert({
+                        closet_id: closet.id,
+                        owner_id: user.id,
+                        category: category,
+                        name: name,
+                        image_url: uploadedPath
+                    });
+
+            if (itemError) throw itemError;
+
+            alert("Your clothing was added to My Closet!");
+
+            form.reset();
+
+            await displayMyCloset();
+
+        } catch (error) {
+            console.error("Closet upload error:", error);
+
+            // Remove the image if its database record failed.
+            if (uploadedPath) {
+                await supabaseClient.storage
+                    .from("closet-images")
+                    .remove([uploadedPath]);
+            }
+
+            alert("Upload failed: " + error.message);
+
+        } finally {
+            button.disabled = false;
+            button.textContent = "UPLOAD TO MY CLOSET";
+        }
+    });
+
+
+// Display clothing saved in the user's closet.
+async function displayMyCloset() {
+    const container =
+        document.getElementById("my-closet-items");
+
+    if (!container) return;
+
+    const { data: { user }, error: userError } =
+        await supabaseClient.auth.getUser();
+
+    if (userError || !user) {
+        container.textContent =
+            "Sign in to view your clothing collection.";
+        return;
+    }
+
+    try {
+        const { data: closet, error: closetError } =
+            await supabaseClient
+                .from("closets")
+                .select("id")
+                .eq("owner_id", user.id)
+                .order("created_at", { ascending: false })
+                .limit(1)
+                .maybeSingle();
+
+        if (closetError) throw closetError;
+
+        if (!closet) {
+            container.textContent =
+                "Your closet is ready. Upload your first item!";
+            return;
+        }
+
+        const { data: items, error: itemsError } =
+            await supabaseClient
+                .from("closet_items")
+                .select("id, name, category, image_url")
+                .eq("closet_id", closet.id)
+                .order("created_at", { ascending: false });
+
+        if (itemsError) throw itemsError;
+
+        container.innerHTML = "";
+
+        if (!items || items.length === 0) {
+            container.textContent =
+                "Your closet is empty. Upload your first item!";
+            return;
+        }
+
+        for (const item of items) {
+            const { data: imageData, error: imageError } =
+                await supabaseClient.storage
+                    .from("closet-images")
+                    .createSignedUrl(item.image_url, 3600);
+
+            const card = document.createElement("div");
+            card.className = "closet-item-card";
+
+            if (!imageError && imageData?.signedUrl) {
+                const image = document.createElement("img");
+                image.src = imageData.signedUrl;
+                image.alt = item.name;
+                card.appendChild(image);
+            }
+
+            const itemName = document.createElement("h4");
+            itemName.textContent = item.name;
+            card.appendChild(itemName);
+
+            const itemCategory = document.createElement("p");
+            itemCategory.textContent = item.category;
+            card.appendChild(itemCategory);
+
+            container.appendChild(card);
+        }
+
+    } catch (error) {
+        console.error("Could not load closet:", error);
+        container.textContent =
+            "We couldn't load your closet. Please try again.";
+    }
+}
+
+
+// Load the closet when the page opens.
+displayMyCloset();
+
