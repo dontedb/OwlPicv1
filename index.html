@@ -119,6 +119,65 @@
 </section>
 <!-- END BUILD THE LOOK SECTION -->
 
+<!-- SHOW OFF YOUR LOOK -->
+<section class="show-off-section" id="show-off">
+
+    <div class="section-heading">
+        <h2>SHOW OFF YOUR LOOK</h2>
+        <p>
+            Your style. Your outfit. Your moment.
+            Share your look with the OWL PIC community.
+        </p>
+    </div>
+
+    <div class="look-upload-area">
+
+        <h3>UPLOAD YOUR OUTFIT PHOTO</h3>
+
+        <form id="look-upload-form">
+
+            <label for="look-photo">Choose Your Picture</label>
+            <input
+                type="file"
+                id="look-photo"
+                accept="image/*"
+                required
+            >
+
+            <label for="look-caption">Tell Us About Your Look</label>
+            <textarea
+                id="look-caption"
+                placeholder="Describe your outfit..."
+                maxlength="500"
+            ></textarea>
+
+            <label for="look-visibility">Who Can See Your Look?</label>
+            <select id="look-visibility" required>
+                <option value="public">Everyone</option>
+                <option value="followers">Followers Only</option>
+                <option value="only_me">Only Me</option>
+            </select>
+
+            <button type="submit">
+                SHARE MY LOOK
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="section-heading">
+        <h3>COMMUNITY LOOKS</h3>
+        <p>Discover how the OWL PIC community puts it together.</p>
+    </div>
+
+    <div id="look-gallery" class="look-gallery">
+        <!-- Outfit photos will appear here -->
+    </div>
+
+</section>
+<!-- END SHOW OFF YOUR LOOK -->
+
 <!-- MUSIC SECTION -->
 <section class="music-section" id="music">
     <div class="section-heading">
