@@ -856,3 +856,92 @@ footer .hashtag {
         flex-wrap: wrap;
     }
 }
+
+/* OWL PIC - SHOW OFF YOUR LOOK */
+
+.show-off-section {
+    padding: 70px 5%;
+    background: linear-gradient(180deg, #08070c, #140b20);
+    color: white;
+}
+
+.look-upload-area {
+    max-width: 650px;
+    margin: 35px auto 60px;
+    padding: 30px;
+    background: #100d17;
+    border: 1px solid #7130a8;
+    border-radius: 16px;
+    box-shadow: 0 0 22px rgba(113, 48, 168, 0.15);
+}
+
+.look-upload-area h3 {
+    margin-bottom: 25px;
+    text-align: center;
+    color: #c58aff;
+}
+
+#look-upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#look-upload-form label {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #e8d8ff;
+}
+
+#look-upload-form input,
+#look-upload-form textarea,
+#look-upload-form select {
+    width: 100%;
+    padding: 13px;
+    background: #08070c;
+    color: white;
+    border: 1px solid #7130a8;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+#look-upload-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#look-upload-form button {
+    margin-top: 15px;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    background: linear-gradient(90deg, #7130a8, #a33be0);
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+#look-upload-form button:hover {
+    box-shadow: 0 0 16px rgba(163, 59, 224, 0.55);
+}
+
+.look-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+    max-width: 1200px;
+    margin: 30px auto 0;
+}
+
+@media (max-width: 600px) {
+    .look-upload-area {
+        padding: 20px;
+    }
+
+    .look-gallery {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* END SHOW OFF YOUR LOOK */
