@@ -750,13 +750,10 @@ footer .hashtag {
 }
 
 .music-section .section-heading h2 {
+    color: #d15aff;
     font-size: clamp(26px, 4vw, 36px);
     letter-spacing: 3px;
     text-shadow: 0 0 15px #a72bff;
-}
-
-.music-section .section-heading p {
-    color: #c8b5d8;
 }
 
 .music-grid {
