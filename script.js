@@ -625,6 +625,119 @@ document.getElementById("closet-upload-form")
 
             await displayMyCloset();
 
+// =====================================
+// OWL PIC - SHOW OFF YOUR LOOK UPLOAD
+// =====================================
+
+document.getElementById("look-upload-form")
+    ?.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        // Require the member to sign in.
+        const loggedIn = await checkUserLogin();
+
+        if (!loggedIn) return;
+
+        const { data: { user }, error: userError } =
+            await supabaseClient.auth.getUser();
+
+        if (userError || !user) {
+            alert("Please sign in before sharing your look.");
+            return;
+        }
+
+        const file = document.getElementById("look-photo").files[0];
+        const caption = document.getElementById("look-caption").value.trim();
+        const visibility = document.getElementById("look-visibility").value;
+
+        if (!file) {
+            alert("Please choose an outfit photo.");
+            return;
+        }
+
+        if (!file.type.startsWith("image/")) {
+            alert("Please select an image file.");
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            alert("Your photo must be 5 MB or smaller.");
+            return;
+        }
+
+        const form = event.currentTarget;
+        const button = form.querySelector('button[type="submit"]');
+
+        button.disabled = true;
+        button.textContent = "UPLOADING...";
+
+        let imagePath = null;
+
+        try {
+            // Create a unique post and image path.
+            const postId = crypto.randomUUID();
+            const extension =
+                file.name.split(".").pop().toLowerCase()
+                    .replace(/[^a-z0-9]/g, "") || "jpg";
+
+            const fileName = Date.now() + "." + extension;
+
+            imagePath = `${user.id}/${postId}/${fileName}`;
+
+            // Upload photo to the private look-posts bucket.
+            const { error: uploadError } =
+                await supabaseClient.storage
+                    .from("look-posts")
+                    .upload(imagePath, file, {
+                        upsert: false,
+                        contentType: file.type
+                    });
+
+            if (uploadError) throw uploadError;
+
+            // Save the look in the database.
+            const { error: postError } =
+                await supabaseClient
+                    .from("look_posts")
+                    .insert({
+                        id: postId,
+                        user_id: user.id,
+                        closet_id: null,
+                        caption: caption,
+                        image_path: imagePath,
+                        visibility: visibility
+                    });
+
+            if (postError) throw postError;
+
+            alert("Your look has been shared!");
+
+            form.reset();
+
+            await displayLookGallery();
+
+        } catch (error) {
+            console.error("Look upload error:", error);
+
+            if (imagePath) {
+                await supabaseClient.storage
+                    .from("look-posts")
+                    .remove([imagePath]);
+            }
+
+            alert("Upload failed: " + error.message);
+
+        } finally {
+            button.disabled = false;
+            button.textContent = "SHARE MY LOOK";
+        }
+    });
+
+// =====================================
+// END SHOW OFF YOUR LOOK UPLOAD
+// =====================================
+
         } catch (error) {
             console.error("Closet upload error:", error);
 
