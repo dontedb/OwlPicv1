@@ -946,47 +946,21 @@ footer .hashtag {
 
 /* END SHOW OFF YOUR LOOK */
 
-/* CENTER SHOW OFF YOUR LOOK HEADING */
+/* SHOW OFF YOUR LOOK - MATCH BUILD THE LOOK */
 
-.show-off-section > .section-heading h2 {
+.show-off-section .section-heading {
     text-align: center;
-    color: #c58aff;
-    font-size: 36px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    margin-bottom: 28px;
 }
-
-.show-off-section > .section-heading p {
-    text-align: center;
-    color: #ffffff;
-    margin-top: 12px;
-}
-
-/* MOBILE HEADING SIZE */
-@media (max-width: 600px) {
-    .show-off-section > .section-heading h2 {
-        font-size: 28px;
-    }
-}
-
-/* SHOW OFF YOUR LOOK - PURPLE GLOW */
-
-.show-off-section > .section-heading h2 {
-    text-shadow:
-        0 0 8px rgba(163, 59, 224, 0.7),
-        0 0 18px rgba(163, 59, 224, 0.5),
-        0 0 30px rgba(113, 48, 168, 0.4);
-}
-
-/* OWL PIC - SHOW OFF YOUR LOOK GLOW EFFECT */
 
 .show-off-section .section-heading h2 {
-    color: #c58aff !important;
-    text-align: center !important;
-    text-shadow:
-        0 0 5px #c58aff,
-        0 0 12px #a33be0,
-        0 0 25px #9635d5,
-        0 0 40px #7130a8 !important;
+    color: #d15aff;
+    font-size: clamp(26px, 4vw, 36px);
+    letter-spacing: 3px;
+    text-shadow: 0 0 15px #a72bff;
+}
+
+.show-off-section .section-heading p {
+    color: #c8b5d8;
+    text-align: center;
 }
