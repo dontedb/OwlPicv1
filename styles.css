@@ -945,3 +945,27 @@ footer .hashtag {
 }
 
 /* END SHOW OFF YOUR LOOK */
+
+/* CENTER SHOW OFF YOUR LOOK HEADING */
+
+.show-off-section > .section-heading h2 {
+    text-align: center;
+    color: #c58aff;
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.show-off-section > .section-heading p {
+    text-align: center;
+    color: #ffffff;
+    margin-top: 12px;
+}
+
+/* MOBILE HEADING SIZE */
+@media (max-width: 600px) {
+    .show-off-section > .section-heading h2 {
+        font-size: 28px;
+    }
+}
