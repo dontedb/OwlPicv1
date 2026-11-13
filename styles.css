@@ -969,3 +969,12 @@ footer .hashtag {
         font-size: 28px;
     }
 }
+
+/* SHOW OFF YOUR LOOK - PURPLE GLOW */
+
+.show-off-section > .section-heading h2 {
+    text-shadow:
+        0 0 8px rgba(163, 59, 224, 0.7),
+        0 0 18px rgba(163, 59, 224, 0.5),
+        0 0 30px rgba(113, 48, 168, 0.4);
+}
