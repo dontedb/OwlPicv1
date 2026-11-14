@@ -627,28 +627,6 @@ document.getElementById("closet-upload-form")
 
 // =====================================
 
-
-        } catch (error) {
-            console.error("Look upload error:", error);
-
-            if (imagePath) {
-                await supabaseClient.storage
-                    .from("look-posts")
-                    .remove([imagePath]);
-            }
-
-            alert("Upload failed: " + error.message);
-
-        } finally {
-            button.disabled = false;
-            button.textContent = "SHARE MY LOOK";
-        }
-    });
-
-// =====================================
-// END SHOW OFF YOUR LOOK UPLOAD
-// =====================================
-
         } catch (error) {
             console.error("Closet upload error:", error);
 
