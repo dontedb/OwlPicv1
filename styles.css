@@ -961,3 +961,13 @@ footer .hashtag {
     color: #c8b5d8;
     text-align: center;
 }
+/* COMMUNITY LOOKS PURPLE GLOW */
+#show-off .section-heading h3 {
+    color: #d15aff;
+    font-size: 25px;
+    margin-bottom: 7px;
+    text-shadow:
+        0 0 5px #d15aff,
+        0 0 12px #a020f0,
+        0 0 20px #a020f0;
+}
