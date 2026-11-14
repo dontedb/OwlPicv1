@@ -867,3 +867,87 @@ document.getElementById("look-upload-form")
 // =====================================
 // END SHOW OFF YOUR LOOK UPLOAD
 // =====================================
+
+// =====================================
+// OWL PIC - COMMUNITY LOOKS GALLERY
+// =====================================
+
+async function displayLookGallery() {
+
+    const container = document.getElementById("look-gallery");
+
+    if (!container) return;
+
+    container.innerHTML = "Loading community looks...";
+
+    try {
+
+        // Retrieve posts the current viewer is allowed to see.
+        const { data: posts, error } = await supabaseClient
+            .from("look_posts")
+            .select("id, user_id, caption, image_path, visibility, created_at")
+            .order("created_at", { ascending: false });
+
+        if (error) throw error;
+
+        container.innerHTML = "";
+
+        if (!posts || posts.length === 0) {
+            container.textContent =
+                "No community looks yet. Be the first to share your style!";
+            return;
+        }
+
+        // Display each permitted outfit photo.
+        for (const post of posts) {
+
+            const { data: imageData, error: imageError } =
+                await supabaseClient.storage
+                    .from("look-posts")
+                    .createSignedUrl(post.image_path, 3600);
+
+            const card = document.createElement("div");
+            card.className = "look-card";
+
+            if (!imageError && imageData?.signedUrl) {
+
+                const image = document.createElement("img");
+                image.src = imageData.signedUrl;
+                image.alt = "OWL PIC community outfit";
+                image.loading = "lazy";
+
+                card.appendChild(image);
+
+            } else {
+                continue;
+            }
+
+            const caption = document.createElement("p");
+            caption.textContent = post.caption || "Check out my look!";
+
+            card.appendChild(caption);
+
+            container.appendChild(card);
+        }
+
+        if (container.children.length === 0) {
+            container.textContent =
+                "No outfit photos are available right now.";
+        }
+
+    } catch (error) {
+
+        console.error("Community gallery error:", error);
+
+        container.textContent =
+            "Unable to load community looks. Please try again.";
+
+    }
+}
+
+// Load community looks when the page opens.
+displayLookGallery();
+
+// =====================================
+// END COMMUNITY LOOKS GALLERY
+// =====================================
