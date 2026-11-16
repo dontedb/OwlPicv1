@@ -1075,7 +1075,7 @@ async function loadProductVotingData() {
         displayCategories();
         displayWinningLook();
         displayOutfitPreview();
-
+displayTrendingProducts(currentTrendingCategory);
         console.log("OWL PIC: Supabase voting data loaded!");
 
     } catch (error) {
