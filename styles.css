@@ -1075,3 +1075,21 @@ footer .hashtag {
 }
 
 /* END TRENDING NOW STYLES */
+/* CENTER TRENDING NOW HEADING */
+
+.trending-section .section-heading {
+    text-align: center;
+}
+
+.trending-section .section-heading h2 {
+    color: #b58be5;
+    text-align: center;
+    text-shadow: 0 0 8px rgba(113, 48, 168, 0.8),
+                 0 0 18px rgba(113, 48, 168, 0.5);
+}
+
+.trending-section .section-heading p {
+    text-align: center;
+}
+
+/* END TRENDING HEADING */
