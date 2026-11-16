@@ -1086,4 +1086,82 @@ async function loadProductVotingData() {
     }
 }
 
+// =====================================
+// OWL PIC - TRENDING NOW
+// =====================================
+
+let currentTrendingCategory = "shirts";
+
+function displayTrendingProducts(categoryId = currentTrendingCategory) {
+
+    const container = document.getElementById("trending-products");
+
+    if (!container) return;
+
+    const category = categories.find(cat => cat.id === categoryId);
+
+    if (!category) return;
+
+    currentTrendingCategory = categoryId;
+
+    // Highlight the selected category button.
+    document.querySelectorAll(".trending-category-btn").forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.dataset.category === categoryId
+        );
+    });
+
+    // Sort products by vote totals, highest first.
+    const trendingItems = [...category.items].sort((a, b) => {
+        return (votes[b.id] || 0) - (votes[a.id] || 0);
+    });
+
+    container.innerHTML = `
+        <h3 class="trending-category-title">
+            TRENDING ${category.name.toUpperCase()}
+        </h3>
+
+        <div class="trending-product-row">
+            ${trendingItems.map((item, index) => `
+                <div class="trending-product-card">
+
+                    <div class="trending-product-image">
+                        ${item.emoji || category.icon}
+                    </div>
+
+                    <h4>${item.name}</h4>
+
+                    <p>${votes[item.id] || 0} votes</p>
+
+                    ${index === 0 ? '<span class="trending-rank">#1 TRENDING</span>' : ''}
+
+                </div>
+            `).join("")}
+        </div>
+    `;
+}
+
+// Make the category buttons clickable.
+function initializeTrendingCategories() {
+
+    const buttons = document.querySelectorAll(".trending-category-btn");
+
+    buttons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            displayTrendingProducts(button.dataset.category);
+
+        });
+
+    });
+
+    displayTrendingProducts("shirts");
+}
+
+// =====================================
+// END TRENDING NOW
+// =====================================
+
 loadProductVotingData();
