@@ -971,9 +971,54 @@ displayLookGallery();
 // LOAD REAL PRODUCT VOTES FROM SUPABASE
 // =====================================
 
+
 async function loadProductVotingData() {
     try {
-        // Get the product catalog.
+        // Preserve the selections saved in the browser.
+        const legacySelections = { ...selectedVotes };
+
+        // Get the signed-in user.
+        const { data: { user }, error: userError } =
+            await supabaseClient.auth.getUser();
+
+        if (userError) throw userError;
+
+        // Migrate previous browser selections into Supabase.
+        if (user) {
+            for (const [categoryId, productKey] of
+                Object.entries(legacySelections)) {
+
+                const { data: product, error: productError } =
+                    await supabaseClient
+                        .from("product_catalog")
+                        .select("id")
+                        .eq("product_key", productKey)
+                        .eq("category", categoryId)
+                        .maybeSingle();
+
+                if (productError) throw productError;
+
+                if (!product) continue;
+
+                const { error: saveError } =
+                    await supabaseClient
+                        .from("product_votes")
+                        .upsert(
+                            {
+                                product_id: product.id,
+                                user_id: user.id,
+                                category: categoryId
+                            },
+                            {
+                                onConflict: "user_id,category"
+                            }
+                        );
+
+                if (saveError) throw saveError;
+            }
+        }
+
+        // Load the product catalog.
         const { data: products, error: productsError } =
             await supabaseClient
                 .from("product_catalog")
@@ -981,7 +1026,7 @@ async function loadProductVotingData() {
 
         if (productsError) throw productsError;
 
-        // Get all public product votes.
+        // Load all public votes.
         const { data: productVotes, error: votesError } =
             await supabaseClient
                 .from("product_votes")
@@ -989,14 +1034,12 @@ async function loadProductVotingData() {
 
         if (votesError) throw votesError;
 
-        // Match database product IDs to the product keys.
         const productKeys = {};
 
         products.forEach(product => {
             productKeys[product.id] = product.product_key;
         });
 
-        // Rebuild the real vote totals.
         const realVotes = {};
         const mySelections = {};
 
@@ -1007,35 +1050,28 @@ async function loadProductVotingData() {
 
             realVotes[productKey] =
                 (realVotes[productKey] || 0) + 1;
+
+            if (user && vote.user_id === user.id) {
+                mySelections[vote.category] = productKey;
+            }
         });
 
-        // Load this member's current selections.
-        const { data: { user } } =
-            await supabaseClient.auth.getUser();
-
-        if (user) {
-            productVotes.forEach(vote => {
-                if (vote.user_id === user.id) {
-                    const productKey =
-                        productKeys[vote.product_id];
-
-                    if (productKey) {
-                        mySelections[vote.category] = productKey;
-                    }
-                }
-            });
-        }
-
-        // Replace the old browser-based product totals.
+        // Update product vote totals from Supabase.
         Object.keys(votes).forEach(key => delete votes[key]);
         Object.assign(votes, realVotes);
 
+        // Restore database selections.
+        // If signed out, preserve existing browser selections.
         Object.keys(selectedVotes).forEach(
             key => delete selectedVotes[key]
         );
-        Object.assign(selectedVotes, mySelections);
 
-        // Refresh the page displays.
+        Object.assign(
+            selectedVotes,
+            user ? mySelections : legacySelections
+        );
+
+        // Refresh all outfit displays.
         displayCategories();
         displayWinningLook();
         displayOutfitPreview();
@@ -1043,7 +1079,11 @@ async function loadProductVotingData() {
         console.log("OWL PIC: Supabase voting data loaded!");
 
     } catch (error) {
-        console.error("Error loading Supabase voting data:", error);
+        console.error(
+            "Error loading Supabase voting data:",
+            error
+        );
     }
 }
+
 loadProductVotingData();
