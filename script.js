@@ -967,3 +967,83 @@ displayLookGallery();
 // =====================================
 // END COMMUNITY LOOKS GALLERY
 // =====================================
+// =====================================
+// LOAD REAL PRODUCT VOTES FROM SUPABASE
+// =====================================
+
+async function loadProductVotingData() {
+    try {
+        // Get the product catalog.
+        const { data: products, error: productsError } =
+            await supabaseClient
+                .from("product_catalog")
+                .select("id, product_key");
+
+        if (productsError) throw productsError;
+
+        // Get all public product votes.
+        const { data: productVotes, error: votesError } =
+            await supabaseClient
+                .from("product_votes")
+                .select("product_id, user_id, category");
+
+        if (votesError) throw votesError;
+
+        // Match database product IDs to the product keys.
+        const productKeys = {};
+
+        products.forEach(product => {
+            productKeys[product.id] = product.product_key;
+        });
+
+        // Rebuild the real vote totals.
+        const realVotes = {};
+        const mySelections = {};
+
+        productVotes.forEach(vote => {
+            const productKey = productKeys[vote.product_id];
+
+            if (!productKey) return;
+
+            realVotes[productKey] =
+                (realVotes[productKey] || 0) + 1;
+        });
+
+        // Load this member's current selections.
+        const { data: { user } } =
+            await supabaseClient.auth.getUser();
+
+        if (user) {
+            productVotes.forEach(vote => {
+                if (vote.user_id === user.id) {
+                    const productKey =
+                        productKeys[vote.product_id];
+
+                    if (productKey) {
+                        mySelections[vote.category] = productKey;
+                    }
+                }
+            });
+        }
+
+        // Replace the old browser-based product totals.
+        Object.keys(votes).forEach(key => delete votes[key]);
+        Object.assign(votes, realVotes);
+
+        Object.keys(selectedVotes).forEach(
+            key => delete selectedVotes[key]
+        );
+        Object.assign(selectedVotes, mySelections);
+
+        // Refresh the page displays.
+        displayCategories();
+        displayWinningLook();
+        displayOutfitPreview();
+
+        console.log("OWL PIC: Supabase voting data loaded!");
+
+    } catch (error) {
+        console.error("Error loading Supabase voting data:", error);
+    }
+}
+loadProductVotingData();
