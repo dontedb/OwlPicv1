@@ -269,7 +269,7 @@ async function voteForProduct(categoryId, productId) {
         displayCategories();
         displayWinningLook();
         displayOutfitPreview();
-
+displayTrendingProducts(currentTrendingCategory);
     } catch (error) {
         console.error("Product voting error:", error);
         alert("Your vote could not be saved. Please try again.");
