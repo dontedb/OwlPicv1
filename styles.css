@@ -971,3 +971,107 @@ footer .hashtag {
         0 0 12px #a020f0,
         0 0 20px #a020f0;
 }
+
+/* =====================================
+   OWL PIC - TRENDING NOW STYLES
+===================================== */
+
+.trending-section {
+    padding: 50px 5%;
+    background: #100d18;
+    border-top: 1px solid #7130a8;
+    border-bottom: 1px solid #7130a8;
+}
+
+.trending-categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 30px 0;
+}
+
+.trending-category-btn {
+    background: #211a2d;
+    color: white;
+    border: 1px solid #7130a8;
+    border-radius: 25px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.trending-category-btn:hover,
+.trending-category-btn.active {
+    background: #7130a8;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(113, 48, 168, 0.35);
+}
+
+.trending-category-title {
+    color: white;
+    margin: 25px 0 18px;
+    font-size: 20px;
+}
+
+.trending-product-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.trending-product-card {
+    background: #211a2d;
+    border: 1px solid #38264b;
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+}
+
+.trending-product-image {
+    background: #332644;
+    border-radius: 12px;
+    min-height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+    margin-bottom: 14px;
+}
+
+.trending-product-card h4 {
+    color: white;
+    margin-bottom: 8px;
+}
+
+.trending-product-card p {
+    color: #c5b9d5;
+    font-size: 13px;
+}
+
+.trending-rank {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background: #7130a8;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+@media (max-width: 650px) {
+    .trending-product-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .trending-category-btn {
+        padding: 10px 14px;
+        font-size: 12px;
+    }
+}
+
+/* END TRENDING NOW STYLES */
