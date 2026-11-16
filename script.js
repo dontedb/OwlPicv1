@@ -209,33 +209,71 @@ container.innerHTML = "";
 
 // REQUIRE LOGIN BEFORE PRODUCT VOTING
 
+
 async function voteForProduct(categoryId, productId) {
+    try {
+        // Require the user to sign in before voting.
+        const loggedIn = await checkUserLogin();
+        if (!loggedIn) return;
 
-    const loggedIn = await checkUserLogin();
+        // Get the signed-in user's account.
+        const { data: { user }, error: userError } =
+            await supabaseClient.auth.getUser();
 
-    if (!loggedIn) return;
+        if (userError) throw userError;
+        if (!user) return;
 
-    const previousVote = selectedVotes[categoryId];
+        // Find the product's actual database ID.
+        const { data: product, error: productError } =
+            await supabaseClient
+                .from("product_catalog")
+                .select("id")
+                .eq("product_key", productId)
+                .eq("category", categoryId)
+                .single();
 
-    if (previousVote === productId) {
-        return;
+        if (productError) throw productError;
+
+        // Remember the user's previous selection.
+        const previousVote = selectedVotes[categoryId];
+
+        if (previousVote === productId) return;
+
+        // Save or change the user's vote in Supabase.
+        const { error: voteError } = await supabaseClient
+            .from("product_votes")
+            .upsert(
+                {
+                    product_id: product.id,
+                    user_id: user.id,
+                    category: categoryId
+                },
+                {
+                    onConflict: "user_id,category"
+                }
+            );
+
+        if (voteError) throw voteError;
+
+        // Update the displayed counts after the database succeeds.
+        if (previousVote) {
+            votes[previousVote] = Math.max(
+                0,
+                (votes[previousVote] || 0) - 1
+            );
+        }
+
+        votes[productId] = (votes[productId] || 0) + 1;
+        selectedVotes[categoryId] = productId;
+
+        displayCategories();
+        displayWinningLook();
+        displayOutfitPreview();
+
+    } catch (error) {
+        console.error("Product voting error:", error);
+        alert("Your vote could not be saved. Please try again.");
     }
-
-    if (previousVote) {
-        votes[previousVote] = Math.max(
-            0,
-            (votes[previousVote] || 0) - 1
-        );
-    }
-
-    votes[productId] = (votes[productId] || 0) + 1;
-
-    selectedVotes[categoryId] = productId;
-
-    saveVotes();
-    displayCategories();
-    displayWinningLook();
-    displayOutfitPreview();
 }
 
   
