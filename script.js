@@ -1164,4 +1164,5 @@ function initializeTrendingCategories() {
 // END TRENDING NOW
 // =====================================
 
+initializeTrendingCategories();
 loadProductVotingData();
