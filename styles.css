@@ -836,6 +836,29 @@ footer .hashtag {
     transform: translateY(-2px);
 }
 
+/* OWL PIC LOG OUT BUTTON */
+
+#logout-button {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #fff;
+    border: 1px solid #9635d5;
+    background: linear-gradient(90deg, #7130a8, #a33be0);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#logout-button:hover {
+    box-shadow: 0 0 14px rgba(163, 59, 224, 0.55);
+    transform: translateY(-2px);
+}
+
 /* MOBILE HEADER LAYOUT */
 @media (max-width: 850px) {
     .topbar {
