@@ -1215,7 +1215,7 @@ async function displayPersonalizedRecommendations() {
                 .sort((a, b) =>
                     (votes[b.id] || 0) - (votes[a.id] || 0)
                 )
-                .slice(0, 3);
+                .slice(0, 2);
 
             return {
                 category,
