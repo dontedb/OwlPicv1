@@ -270,6 +270,7 @@ async function voteForProduct(categoryId, productId) {
         displayWinningLook();
         displayOutfitPreview();
 displayTrendingProducts(currentTrendingCategory);
+    displayPersonalizedRecommendations();
     } catch (error) {
         console.error("Product voting error:", error);
         alert("Your vote could not be saved. Please try again.");
@@ -1162,6 +1163,126 @@ function initializeTrendingCategories() {
 
 // =====================================
 // END TRENDING NOW
+// =====================================
+
+ // =====================================
+ // OWL PIC - PERSONALIZED RECOMMENDATIONS
+ // =====================================
+
+async function displayPersonalizedRecommendations() {
+
+    const container = document.getElementById(
+        "personalized-recommendations"
+    );
+
+    if (!container) return;
+
+    container.innerHTML = "<p>Finding recommendations for you...</p>";
+
+    try {
+
+        // Check who is signed in.
+        const { data: { user }, error } =
+            await supabaseClient.auth.getUser();
+
+        if (error) throw error;
+
+        // Visitors must sign in for personalized recommendations.
+        if (!user) {
+            container.innerHTML =
+                "<p>Sign in to discover your personalized recommendations.</p>";
+            return;
+        }
+
+        // Identify categories the user has voted in.
+        const preferredCategories = categories.filter(category =>
+            selectedVotes[category.id]
+        );
+
+        if (preferredCategories.length === 0) {
+            container.innerHTML =
+                "<p>Start voting in Build the Look to unlock your personalized recommendations!</p>";
+            return;
+        }
+
+        // Find other popular products in the user's preferred categories.
+        const recommendationGroups = preferredCategories.map(category => {
+
+            const selectedProduct = selectedVotes[category.id];
+
+            const recommendedItems = category.items
+                .filter(item => item.id !== selectedProduct)
+                .sort((a, b) =>
+                    (votes[b.id] || 0) - (votes[a.id] || 0)
+                )
+                .slice(0, 2);
+
+            return {
+                category,
+                items: recommendedItems
+            };
+
+        }).filter(group => group.items.length > 0);
+
+        if (recommendationGroups.length === 0) {
+            container.innerHTML =
+                "<p>More recommendations are coming soon!</p>";
+            return;
+        }
+
+        // Display personalized recommendations.
+        container.innerHTML = recommendationGroups.map(group => `
+
+            <div class="personalized-category">
+
+                <h3 class="trending-category-title">
+                    BECAUSE YOU LIKE ${group.category.name.toUpperCase()}
+                </h3>
+
+                <div class="trending-product-row">
+
+                    ${group.items.map(item => `
+
+                        <div class="trending-product-card">
+
+                            <div class="trending-product-image">
+                                ${item.emoji || group.category.icon}
+                            </div>
+
+                            <h4>${item.name}</h4>
+
+                            <p>${votes[item.id] || 0} community votes</p>
+
+                            <span class="trending-rank">
+                                PICKED FOR YOU
+                            </span>
+
+                        </div>
+
+                    `).join("")}
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+        console.log("OWL PIC: Personalized recommendations loaded!");
+
+    } catch (error) {
+
+        console.error(
+            "OWL PIC recommendation error:",
+            error
+        );
+
+        container.innerHTML =
+            "<p>We couldn't load your recommendations. Please try again.</p>";
+    }
+}
+
+// =====================================
+// END PERSONALIZED RECOMMENDATIONS
 // =====================================
 
 initializeTrendingCategories();
