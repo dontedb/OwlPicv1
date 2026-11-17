@@ -1289,3 +1289,27 @@ async function displayPersonalizedRecommendations() {
 
 initializeTrendingCategories();
 loadProductVotingData();
+
+// =====================================
+// OWL PIC - SIGN OUT FUNCTION
+// =====================================
+
+async function signOutUser() {
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+        console.error("Sign out error:", error);
+        alert("Unable to sign out. Please try again.");
+        return;
+    }
+
+    // Return the user to the OWL PIC home page.
+    window.location.href = "index.html";
+}
+
+// Connect the Log Out button to Supabase.
+const logoutButton = document.getElementById("logout-button");
+
+if (logoutButton) {
+    logoutButton.addEventListener("click", signOutUser);
+}
