@@ -1073,11 +1073,13 @@ async function loadProductVotingData() {
         );
 
         // Refresh all outfit displays.
-        displayCategories();
-        displayWinningLook();
-        displayOutfitPreview();
+displayCategories();
+displayWinningLook();
+displayOutfitPreview();
 displayTrendingProducts(currentTrendingCategory);
-        console.log("OWL PIC: Supabase voting data loaded!");
+displayPersonalizedRecommendations();
+
+console.log("OWL PIC: Supabase voting data loaded!");
 
     } catch (error) {
         console.error(
