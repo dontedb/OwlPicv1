@@ -161,104 +161,213 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    // OWL PIC - PROFILE PAGE CONNECTION
-    const SUPABASE_URL = "https://djustjxfcfexlysqgdyq.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_uo5uRAaC1mCk1txpLXPCOQ_47T7qk2A";
+    
+// OWL PIC - PROFILE PAGE
 
-    const supabaseClient = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-    );
+const SUPABASE_URL = "https://djustjxfcfexlysqgdyq.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR_EXISTING_PUBLISHABLE_KEY";
 
-    const profileForm = document.getElementById("profile-form");
-    const usernameInput = document.getElementById("username");
-    const avatarInput = document.getElementById("avatar-url");
-    const bioInput = document.getElementById("bio");
-    const avatarImage = document.getElementById("profile-avatar");
-    const statusMessage = document.getElementById("profile-status");
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
 
-    let currentUser = null;
+const profileForm = document.getElementById("profile-form");
+const usernameInput = document.getElementById("username");
+const avatarFileInput = document.getElementById("avatar-file");
+const bioInput = document.getElementById("bio");
+const avatarImage = document.getElementById("profile-avatar");
+const statusMessage = document.getElementById("profile-status");
 
-    // Check whether the visitor is signed in.
-    async function loadProfile() {
-        const { data, error } = await supabaseClient.auth.getUser();
+let currentUser = null;
+let previewUrl = null;
 
-        if (error || !data.user) {
-            window.location.href =
-                "auth.html?returnTo=" +
-                encodeURIComponent("profile.html");
-            return;
-        }
+// Check whether the visitor is signed in.
+async function loadProfile() {
+    const { data, error } = await supabaseClient.auth.getUser();
 
-        currentUser = data.user;
-
-        // Retrieve this user's profile.
-        const { data: profile, error: profileError } =
-            await supabaseClient
-                .from("profiles")
-                .select("username, avatar_url, bio")
-                .eq("id", currentUser.id)
-                .maybeSingle();
-
-        if (profileError) {
-            statusMessage.textContent =
-                "Unable to load your profile.";
-            console.error(profileError);
-            return;
-        }
-
-        if (profile) {
-            usernameInput.value = profile.username || "";
-            avatarInput.value = profile.avatar_url || "";
-            bioInput.value = profile.bio || "";
-
-            if (profile.avatar_url) {
-                avatarImage.src = profile.avatar_url;
-            }
-        }
+    if (error || !data.user) {
+        window.location.href =
+            "auth.html?returnTo=" +
+            encodeURIComponent("profile.html");
+        return;
     }
 
-    // Preview the profile picture.
-    avatarInput.addEventListener("input", function () {
-        if (avatarInput.value.trim()) {
-            avatarImage.src = avatarInput.value.trim();
+    currentUser = data.user;
+
+    const { data: profile, error: profileError } =
+        await supabaseClient
+            .from("profiles")
+            .select("username, avatar_url, bio")
+            .eq("id", currentUser.id)
+            .maybeSingle();
+
+    if (profileError) {
+        console.error(profileError);
+        statusMessage.textContent = "Unable to load your profile.";
+        return;
+    }
+
+    if (profile) {
+        usernameInput.value = profile.username || "";
+        bioInput.value = profile.bio || "";
+
+        if (profile.avatar_url) {
+            avatarImage.src = profile.avatar_url;
         }
-    });
+    }
+}
 
-    // Save the profile to Supabase.
-    profileForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
+// Preview and validate the selected photo.
+avatarFileInput.addEventListener("change", function () {
+    const file = avatarFileInput.files[0];
 
-        if (!currentUser) return;
+    if (!file) return;
 
-        statusMessage.textContent = "Saving profile...";
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
 
-        const username = usernameInput.value.trim();
-        const avatarUrl = avatarInput.value.trim();
-        const bio = bioInput.value.trim();
+    if (!allowedTypes.includes(file.type)) {
+        statusMessage.textContent =
+            "Please choose a JPG, PNG, or WEBP image.";
+        avatarFileInput.value = "";
+        return;
+    }
 
-        const { error } = await supabaseClient
+    if (file.size > 5 * 1024 * 1024) {
+        statusMessage.textContent =
+            "Your picture must be smaller than 5 MB.";
+        avatarFileInput.value = "";
+        return;
+    }
+
+    if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+    }
+
+    previewUrl = URL.createObjectURL(file);
+    avatarImage.src = previewUrl;
+
+    statusMessage.textContent =
+        "Photo selected. Save your profile to submit it for review.";
+});
+
+// Upload a selected photo to private pending storage.
+async function uploadPendingPhoto(file) {
+    const extensions = {
+        "image/jpeg": "jpg",
+        "image/png": "png",
+        "image/webp": "webp"
+    };
+
+    const extension = extensions[file.type];
+
+    if (!extension) {
+        throw new Error("Unsupported image format.");
+    }
+
+    const storagePath =
+        currentUser.id + "/" +
+        crypto.randomUUID() + "." + extension;
+
+    const { error: uploadError } = await supabaseClient
+        .storage
+        .from("pending-photos")
+        .upload(storagePath, file, {
+            contentType: file.type,
+            upsert: false
+        });
+
+    if (uploadError) {
+        throw uploadError;
+    }
+
+    // Record the photo as awaiting moderation.
+    const { error: recordError } = await supabaseClient
+        .from("photo_submissions")
+        .insert({
+            user_id: currentUser.id,
+            storage_path: storagePath,
+            status: "pending"
+        });
+
+    if (recordError) {
+        // Remove the upload if its moderation record failed.
+        await supabaseClient
+            .storage
+            .from("pending-photos")
+            .remove([storagePath]);
+
+        throw recordError;
+    }
+}
+
+// Save profile details and submit any selected photo.
+profileForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    if (!currentUser) return;
+
+    const username = usernameInput.value.trim();
+    const bio = bioInput.value.trim();
+    const file = avatarFileInput.files[0];
+
+    if (!username) {
+        statusMessage.textContent = "Please enter a username.";
+        return;
+    }
+
+    statusMessage.textContent = "Saving your profile...";
+
+    try {
+        const { error: profileError } = await supabaseClient
             .from("profiles")
             .upsert({
                 id: currentUser.id,
                 username: username,
-                avatar_url: avatarUrl || null,
                 bio: bio || null
             }, {
                 onConflict: "id"
             });
 
-        if (error) {
-            console.error("Profile save error:", error);
-            statusMessage.textContent =
-                "Could not save profile. Please try again.";
-            return;
+        if (profileError) {
+            throw profileError;
         }
 
-        statusMessage.textContent = "Profile saved successfully!";
-    });
+        if (file) {
+            statusMessage.textContent =
+                "Uploading photo for moderation...";
 
-    // Load the profile when the page opens.
+            await uploadPendingPhoto(file);
+
+            avatarFileInput.value = "";
+
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+                previewUrl = null;
+            }
+
+            statusMessage.textContent =
+                "Profile saved! Your new photo is awaiting review.";
+        } else {
+            statusMessage.textContent =
+                "Profile saved successfully!";
+        }
+
+    } catch (error) {
+        console.error("Profile save error:", error);
+
+        statusMessage.textContent =
+            "Something went wrong. Check the browser console.";
+    }
+});
+
+// Load profile when the page opens.
+loadProfile();
+
     loadProfile();
 </script>
 
