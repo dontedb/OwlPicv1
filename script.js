@@ -518,7 +518,7 @@ document.getElementById("signin-form")?.addEventListener("submit", async functio
     .get("returnTo");
 
 window.location.href =
-    returnTo && returnTo.startsWith("/")
+    returnTo && !returnTo.startsWith("http")
         ? returnTo
         : "index.html";
     }
