@@ -124,13 +124,17 @@
                 required
             >
 
-            <label for="avatar-url">Profile Image URL</label>
-            <input
-                type="url"
-                id="avatar-url"
-                placeholder="Paste an image URL"
-            >
+            <label for="avatar-file">Profile Picture</label>
 
+<input
+    type="file"
+    id="avatar-file"
+    accept="image/png, image/jpeg, image/webp"
+>
+
+<p class="profile-status">
+    JPG, PNG, or WEBP. Maximum file size: 5 MB.
+</p>
             <label for="bio">About Me</label>
             <textarea
                 id="bio"
