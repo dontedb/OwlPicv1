@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWL PIC | My Profile</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .profile-page {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 25px;
+        }
+
+        .profile-card {
+            background: #111018;
+            border: 1px solid #7130a8;
+            border-radius: 18px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(113,48,168,.2);
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #7130a8;
+            background: #21152d;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .profile-card h1 {
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .profile-card p {
+            color: #ccc;
+        }
+
+        .profile-form {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .profile-form label {
+            display: block;
+            color: white;
+            margin: 18px 0 8px;
+        }
+
+        .profile-form input,
+        .profile-form textarea {
+            width: 100%;
+            padding: 13px;
+            background: #08070c;
+            border: 1px solid #7130a8;
+            border-radius: 8px;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .profile-form textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .profile-button {
+            margin-top: 22px;
+            width: 100%;
+            padding: 14px;
+            background: #7130a8;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .profile-button:hover {
+            background: #9145cf;
+        }
+
+        .profile-status {
+            margin-top: 15px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="index.html">OWL PIC</a>
+    <span>FASHION • MUSIC • SPORTS • CULTURE</span>
+</header>
+
+<main class="profile-page">
+
+    <section class="profile-card">
+
+        <h1>MY PROFILE</h1>
+        <p>Make your profile. Represent your style.</p>
+
+        <img
+            id="profile-avatar"
+            class="profile-avatar"
+            src="images/Regal%20Purple%20Owl%20Graffiti%20Logo.png"
+            alt="Profile picture"
+        >
+
+        <form id="profile-form" class="profile-form">
+
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                maxlength="30"
+                required
+            >
+
+            <label for="avatar-url">Profile Image URL</label>
+            <input
+                type="url"
+                id="avatar-url"
+                placeholder="Paste an image URL"
+            >
+
+            <label for="bio">About Me</label>
+            <textarea
+                id="bio"
+                maxlength="300"
+                placeholder="Tell the community about yourself..."
+            ></textarea>
+
+            <button type="submit" class="profile-button">
+                SAVE PROFILE
+            </button>
+
+            <p id="profile-status" class="profile-status"></p>
+
+        </form>
+
+        <p><a href="index.html">← Back to OWL PIC</a></p>
+
+    </section>
+
+</main>
+
+</body>
+</html>
