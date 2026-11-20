@@ -256,6 +256,7 @@ avatarFileInput.addEventListener("change", function () {
 });
 
 // Upload a selected photo to private pending storage.
+
 async function uploadPendingPhoto(file) {
     const extensions = {
         "image/jpeg": "jpg",
@@ -273,6 +274,7 @@ async function uploadPendingPhoto(file) {
         currentUser.id + "/" +
         crypto.randomUUID() + "." + extension;
 
+    // Upload photo to private storage.
     const { error: uploadError } = await supabaseClient
         .storage
         .from("pending-photos")
@@ -285,17 +287,19 @@ async function uploadPendingPhoto(file) {
         throw uploadError;
     }
 
-    // Record the photo as awaiting moderation.
-    const { error: recordError } = await supabaseClient
-        .from("photo_submissions")
-        .insert({
-            user_id: currentUser.id,
-            storage_path: storagePath,
-            status: "pending"
-        });
+    // Create the pending submission and retrieve its ID.
+    const { data: submission, error: recordError } =
+        await supabaseClient
+            .from("photo_submissions")
+            .insert({
+                user_id: currentUser.id,
+                storage_path: storagePath,
+                status: "pending"
+            })
+            .select("id")
+            .single();
 
     if (recordError) {
-        // Remove the upload if its moderation record failed.
         await supabaseClient
             .storage
             .from("pending-photos")
@@ -303,73 +307,32 @@ async function uploadPendingPhoto(file) {
 
         throw recordError;
     }
-}
 
-// Save profile details and submit any selected photo.
-profileForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
-
-    if (!currentUser) return;
-
-    const username = usernameInput.value.trim();
-    const bio = bioInput.value.trim();
-    const file = avatarFileInput.files[0];
-
-    if (!username) {
-        statusMessage.textContent = "Please enter a username.";
-        return;
-    }
-
-    statusMessage.textContent = "Saving your profile...";
-
-    try {
-        const { error: profileError } = await supabaseClient
-            .from("profiles")
-            .upsert({
-                id: currentUser.id,
-                username: username,
-                bio: bio || null
-            }, {
-                onConflict: "id"
-            });
-
-        if (profileError) {
-            throw profileError;
-        }
-
-        if (file) {
-            statusMessage.textContent =
-                "Uploading photo for moderation...";
-
-            await uploadPendingPhoto(file);
-
-            avatarFileInput.value = "";
-
-            if (previewUrl) {
-                URL.revokeObjectURL(previewUrl);
-                previewUrl = null;
+    // Send this photo submission to the AI moderation function.
+    const { data: moderationData, error: moderationError } =
+        await supabaseClient.functions.invoke(
+            "moderate-profile-photo",
+            {
+                body: {
+                    submissionId: submission.id
+                }
             }
+        );
 
-            statusMessage.textContent =
-                "Profile saved! Your new photo is awaiting review.";
-        } else {
-            statusMessage.textContent =
-                "Profile saved successfully!";
-        }
+    if (moderationError || !moderationData?.success) {
+        console.error(
+            "AI moderation error:",
+            moderationError || moderationData
+        );
 
-    } catch (error) {
-        console.error("Profile save error:", error);
-
-        statusMessage.textContent =
-            "Something went wrong. Check the browser console.";
+        return {
+            screeningFailed: true,
+            flagged: null
+        };
     }
-});
 
-// Load profile when the page opens.
-loadProfile();
-
-</script>
-
-</body>
-</html>
-
+    return {
+        screeningFailed: false,
+        flagged: moderationData.flagged
+    };
+}
