@@ -1313,3 +1313,75 @@ const logoutButton = document.getElementById("logout-button");
 if (logoutButton) {
     logoutButton.addEventListener("click", signOutUser);
 }
+
+// Save profile details and submit any selected photo.
+profileForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    if (!currentUser) return;
+
+    const username = usernameInput.value.trim();
+    const bio = bioInput.value.trim();
+    const file = avatarFileInput.files[0];
+
+    if (!username) {
+        statusMessage.textContent = "Please enter a username.";
+        return;
+    }
+
+    statusMessage.textContent = "Saving your profile...";
+
+    try {
+        const { error: profileError } = await supabaseClient
+            .from("profiles")
+            .upsert({
+                id: currentUser.id,
+                username: username,
+                bio: bio || null
+            }, {
+                onConflict: "id"
+            });
+
+        if (profileError) {
+            throw profileError;
+        }
+
+        if (file) {
+            statusMessage.textContent =
+                "Uploading photo for AI screening...";
+
+            const moderationResult =
+                await uploadPendingPhoto(file);
+
+            avatarFileInput.value = "";
+
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+                previewUrl = null;
+            }
+
+            if (moderationResult.screeningFailed) {
+                statusMessage.textContent =
+                    "Profile saved. Photo is private and awaiting review; AI screening could not finish.";
+            } else if (moderationResult.flagged) {
+                statusMessage.textContent =
+                    "Profile saved. AI flagged your photo for human review.";
+            } else {
+                statusMessage.textContent =
+                    "Profile saved. AI screening passed; your photo is awaiting human approval.";
+            }
+        } else {
+            statusMessage.textContent =
+                "Profile saved successfully!";
+        }
+
+    } catch (error) {
+        console.error("Profile save error:", error);
+
+        statusMessage.textContent =
+            "Something went wrong. Check the browser console.";
+    }
+});
+
+// Load profile when the page opens.
+loadProfile();
