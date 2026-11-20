@@ -336,3 +336,68 @@ async function uploadPendingPhoto(file) {
         flagged: moderationData.flagged
     };
 }
+
+// Save profile details and submit any selected photo.
+profileForm.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    if (!currentUser) {
+        statusMessage.textContent = "Please sign in first.";
+        return;
+    }
+
+    const username = usernameInput.value.trim();
+    const bio = bioInput.value.trim();
+    const file = avatarFileInput.files[0];
+
+    statusMessage.textContent = "Saving your profile...";
+
+    try {
+        const { error: profileError } = await supabaseClient
+            .from("profiles")
+            .upsert({
+                id: currentUser.id,
+                username: username,
+                bio: bio || null
+            }, {
+                onConflict: "id"
+            });
+
+        if (profileError) {
+            throw profileError;
+        }
+
+        if (file) {
+            statusMessage.textContent =
+                "Profile saved. Submitting your photo for review...";
+
+            const moderationResult = await uploadPendingPhoto(file);
+
+            if (moderationResult.screeningFailed) {
+                statusMessage.textContent =
+                    "Profile saved. Your photo is awaiting moderation screening.";
+            } else if (moderationResult.flagged) {
+                statusMessage.textContent =
+                    "Profile saved. Your photo has been flagged for review.";
+            } else {
+                statusMessage.textContent =
+                    "Profile saved! Your photo passed initial screening and is awaiting approval.";
+            }
+
+            avatarFileInput.value = "";
+        } else {
+            statusMessage.textContent = "Your profile was saved successfully!";
+        }
+
+    } catch (error) {
+        console.error("Profile save error:", error);
+        statusMessage.textContent =
+            "Unable to save your profile: " + error.message;
+    }
+});
+
+// Load the signed-in user's profile.
+loadProfile();
+</script>
+</body>
+</html>
