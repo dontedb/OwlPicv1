@@ -194,7 +194,15 @@ async function loadProfile() {
     }
 
     currentUser = data.user;
+// TEMPORARY TEST: Check the signed-in user's admin role.
+const { data: adminRole, error: adminRoleError } =
+    await supabaseClient.rpc("get_my_admin_role");
 
+if (adminRoleError) {
+    console.error("Admin role test failed:", adminRoleError);
+} else {
+    console.log("OWL PIC ADMIN ROLE:", adminRole);
+}
     const { data: profile, error: profileError } =
         await supabaseClient
             .from("profiles")
