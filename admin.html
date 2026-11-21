@@ -339,7 +339,156 @@
                 window.location.href = "auth.html";
             });
 
-        checkAdminAccess();
+// OWL PIC - PHOTO MODERATION QUEUE
+
+async function loadPendingPhotos() {
+    const status = document.getElementById("photo-queue-status");
+    const queue = document.getElementById("photo-queue");
+    const refreshButton = document.getElementById("refresh-photos-button");
+
+    status.textContent = "Loading pending photos...";
+    queue.innerHTML = "";
+
+    if (refreshButton) {
+        refreshButton.disabled = true;
+    }
+
+    try {
+        const { data, error } =
+            await supabaseClient.functions.invoke(
+                "review-profile-photo",
+                {
+                    body: { action: "list" }
+                }
+            );
+
+        if (error) {
+            throw error;
+        }
+
+        if (!data || !data.success) {
+            throw new Error(data?.error || "Unable to load photo queue.");
+        }
+
+        const photos = data.photos || [];
+
+        if (photos.length === 0) {
+            status.textContent = "There are currently no pending photos.";
+            return;
+        }
+
+        status.textContent =
+            photos.length + " photo(s) waiting for review.";
+
+        photos.forEach((photo) => {
+            const card = document.createElement("div");
+
+            card.style.background = "#21172b";
+            card.style.border = "1px solid #7130a8";
+            card.style.borderRadius = "10px";
+            card.style.padding = "15px";
+            card.style.marginTop = "15px";
+
+            const heading = document.createElement("p");
+            heading.textContent = "Submitted by: " + photo.user_id;
+            card.appendChild(heading);
+
+            if (photo.image_url) {
+                const image = document.createElement("img");
+
+                image.src = photo.image_url;
+                image.alt = "Submitted profile photo";
+                image.style.width = "180px";
+                image.style.maxWidth = "100%";
+                image.style.borderRadius = "8px";
+                image.style.display = "block";
+
+                card.appendChild(image);
+            } else {
+                const missingImage = document.createElement("p");
+                missingImage.textContent =
+                    "Image preview could not be loaded.";
+                card.appendChild(missingImage);
+            }
+
+            const approveButton = document.createElement("button");
+            approveButton.className = "admin-button";
+            approveButton.textContent = "Approve";
+            approveButton.style.marginRight = "10px";
+
+            approveButton.addEventListener("click", () => {
+                reviewPhoto(photo.id, "approve");
+            });
+
+            const rejectButton = document.createElement("button");
+            rejectButton.className = "admin-button";
+            rejectButton.textContent = "Reject";
+
+            rejectButton.addEventListener("click", () => {
+                reviewPhoto(photo.id, "reject");
+            });
+
+            card.appendChild(approveButton);
+            card.appendChild(rejectButton);
+
+            queue.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("OWL PIC PHOTO QUEUE ERROR:", error);
+        status.textContent =
+            "Unable to load photos. Check the browser console.";
+    } finally {
+        if (refreshButton) {
+            refreshButton.disabled = false;
+        }
+    }
+}
+
+
+// Approve or reject a submitted photo.
+async function reviewPhoto(submissionId, action) {
+    const confirmed = confirm(
+        "Are you sure you want to " + action + " this photo?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+        const { data, error } =
+            await supabaseClient.functions.invoke(
+                "review-profile-photo",
+                {
+                    body: {
+                        submissionId: submissionId,
+                        action: action
+                    }
+                }
+            );
+
+        if (error) {
+            throw error;
+        }
+
+        if (!data || !data.success) {
+            throw new Error(data?.error || "Photo review failed.");
+        }
+
+        alert("Photo successfully " + action + "d.");
+
+        await loadPendingPhotos();
+
+    } catch (error) {
+        console.error("OWL PIC PHOTO REVIEW ERROR:", error);
+        alert("Unable to review this photo. Check the browser console.");
+    }
+}
+
+        checkAdminAccess().then(() => {
+    loadPendingPhotos();
+});
     </script>
 
 </body>
