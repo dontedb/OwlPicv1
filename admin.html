@@ -217,13 +217,26 @@
             </div>
         </section>
 
-        <section id="moderation">
-            <h2 class="section-title">Photo Moderation</h2>
-            <div class="admin-section">
-                <p>Review submitted photos and approve or reject submissions.</p>
-                <p class="coming-soon">Moderation tools will be connected next.</p>
-            </div>
-        </section>
+       <section id="moderation">
+    <h2 class="section-title">Photo Moderation</h2>
+
+    <div class="admin-section">
+        <p>Review submitted photos and approve or reject submissions.</p>
+
+        <button
+            class="admin-button"
+            id="refresh-photos-button"
+            onclick="loadPendingPhotos()">
+            Refresh Photo Queue
+        </button>
+
+        <p id="photo-queue-status">
+            Loading pending photos...
+        </p>
+
+        <div id="photo-queue"></div>
+    </div>
+</section>
 
         <section id="analytics">
             <h2 class="section-title">Analytics</h2>
