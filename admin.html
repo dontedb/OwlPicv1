@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWL PIC | Admin Portal</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            background: #08070c;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        .admin-header {
+            background: #120d19;
+            border-bottom: 2px solid #7130a8;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .admin-header h1 {
+            color: #c58aff;
+            margin: 0;
+        }
+
+        .admin-header p {
+            margin: 6px 0 0;
+            color: #bbb;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        .admin-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .admin-nav a {
+            color: white;
+            background: #21172b;
+            border: 1px solid #7130a8;
+            padding: 10px 15px;
+            border-radius: 7px;
+            text-decoration: none;
+        }
+
+        .admin-nav a:hover {
+            background: #7130a8;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 18px;
+        }
+
+        .dashboard-card {
+            background: #17111f;
+            border: 1px solid #7130a8;
+            border-radius: 12px;
+            padding: 22px;
+        }
+
+        .dashboard-card h3 {
+            color: #c58aff;
+            margin-top: 0;
+        }
+
+        .dashboard-number {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 12px 0;
+        }
+
+        .dashboard-card p {
+            color: #aaa;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            color: #c58aff;
+            margin-top: 35px;
+        }
+
+        .admin-section {
+            background: #17111f;
+            border: 1px solid #382447;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .coming-soon {
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        .admin-button {
+            background: #7130a8;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            padding: 10px 16px;
+            cursor: pointer;
+        }
+
+        .admin-button:hover {
+            background: #8c42c7;
+        }
+
+        #access-message {
+            padding: 40px 20px;
+            text-align: center;
+            color: #c58aff;
+        }
+
+        #admin-content {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="admin-header">
+        <div>
+            <h1>OWL PIC ADMIN</h1>
+            <p>FASHION • MUSIC • SPORTS • CULTURE</p>
+        </div>
+
+        <button class="admin-button" id="logout-button">
+            Sign Out
+        </button>
+    </header>
+
+    <div id="access-message">
+        Checking administrator access...
+    </div>
+
+    <main class="admin-container" id="admin-content">
+
+        <h2>Dashboard Overview</h2>
+        <p>Welcome to the OWL PIC administration center.</p>
+
+        <nav class="admin-nav">
+            <a href="#overview">Overview</a>
+            <a href="#users">Users</a>
+            <a href="#community">Community</a>
+            <a href="#moderation">Photo Moderation</a>
+            <a href="#analytics">Analytics</a>
+            <a href="#advertising">Advertising</a>
+            <a href="#reports">Reports</a>
+            <a href="#live">Live Management</a>
+            <a href="#financial">Financial Management</a>
+        </nav>
+
+        <section id="overview">
+            <h2 class="section-title">Platform Overview</h2>
+
+            <div class="dashboard-grid">
+
+                <div class="dashboard-card">
+                    <h3>Total Users</h3>
+                    <div class="dashboard-number" id="total-users">—</div>
+                    <p>Registered accounts</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>New Users</h3>
+                    <div class="dashboard-number" id="new-users">—</div>
+                    <p>Accounts created in the last 7 days</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Photo Submissions</h3>
+                    <div class="dashboard-number" id="photo-submissions">—</div>
+                    <p>Pending moderation</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Community</h3>
+                    <div class="dashboard-number" id="community-count">—</div>
+                    <p>Follower connections</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="users">
+            <h2 class="section-title">User Management</h2>
+            <div class="admin-section">
+                <p>Manage accounts, view profiles, and review account activity.</p>
+                <p class="coming-soon">User management tools will be connected next.</p>
+            </div>
+        </section>
+
+        <section id="community">
+            <h2 class="section-title">Community & Followers</h2>
+            <div class="admin-section">
+                <p>Track followers, following, community growth, and engagement.</p>
+                <p class="coming-soon">Community analytics will be connected next.</p>
+            </div>
+        </section>
+
+        <section id="moderation">
+            <h2 class="section-title">Photo Moderation</h2>
+            <div class="admin-section">
+                <p>Review submitted photos and approve or reject submissions.</p>
+                <p class="coming-soon">Moderation tools will be connected next.</p>
+            </div>
+        </section>
+
+        <section id="analytics">
+            <h2 class="section-title">Analytics</h2>
+            <div class="admin-section">
+                <p>Review user growth, active users, peak usage times, and engagement.</p>
+                <p class="coming-soon">Charts and analytics will be connected next.</p>
+            </div>
+        </section>
+
+        <section id="advertising">
+            <h2 class="section-title">Advertising & Sponsorships</h2>
+            <div class="admin-section">
+                <p>Manage future advertising campaigns, sponsorships, and placements.</p>
+                <p class="coming-soon">Advertising is reserved and inactive until monetization begins.</p>
+            </div>
+        </section>
+
+        <section id="reports">
+            <h2 class="section-title">Reports & Complaints</h2>
+            <div class="admin-section">
+                <p class="coming-soon">Coming Soon — community reports and safety management.</p>
+            </div>
+        </section>
+
+        <section id="live">
+            <h2 class="section-title">Live Management</h2>
+            <div class="admin-section">
+                <p class="coming-soon">Coming Soon — creator sessions and live activity.</p>
+            </div>
+        </section>
+
+        <section id="financial">
+            <h2 class="section-title">Financial Management</h2>
+            <div class="admin-section">
+                <p>Owner and authorized Financial Group access only.</p>
+                <p class="coming-soon">Financial reports, advertising revenue, invoices, and payments will be connected next.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        const SUPABASE_URL =
+            "https://djustjxfcfexlysqgdyq.supabase.co";
+
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_uo5uRAaC1mCk1txpLXPCOQ_47T7qk2A";
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
+
+        async function checkAdminAccess() {
+
+            const message =
+                document.getElementById("access-message");
+
+            const dashboard =
+                document.getElementById("admin-content");
+
+            const { data: userData, error: userError } =
+                await supabaseClient.auth.getUser();
+
+            if (userError || !userData.user) {
+                window.location.href = "auth.html";
+                return;
+            }
+
+            const { data: adminRole, error: roleError } =
+                await supabaseClient.rpc("get_my_admin_role");
+
+            if (roleError || !adminRole) {
+                message.textContent =
+                    "Access denied. Administrator permission required.";
+                return;
+            }
+
+            if (adminRole !== "owner") {
+                message.textContent =
+                    "Access denied. Owner access is required for this portal.";
+                return;
+            }
+
+            message.style.display = "none";
+            dashboard.style.display = "block";
+
+            console.log("OWL PIC ADMIN ACCESS:", adminRole);
+        }
+
+        document
+            .getElementById("logout-button")
+            .addEventListener("click", async function() {
+
+                await supabaseClient.auth.signOut();
+
+                window.location.href = "auth.html";
+            });
+
+        checkAdminAccess();
+    </script>
+
+</body>
+</html>
