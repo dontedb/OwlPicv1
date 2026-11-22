@@ -1159,3 +1159,156 @@ footer .hashtag {
 }
 
 /* END PICKED FOR YOU STYLES */
+
+/* =====================================
+   OWL PIC - COMPLETE LOOK MANNEQUIN
+===================================== */
+
+.complete-look-layout {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.8fr) minmax(220px, 1.2fr);
+    align-items: center;
+    gap: 25px;
+    margin-top: 25px;
+    padding: 25px;
+    background: #100b1a;
+    border: 1px solid #7130a8;
+    border-radius: 18px;
+}
+
+.mannequin-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 380px;
+}
+
+.mannequin {
+    position: relative;
+    width: 180px;
+    height: 340px;
+}
+
+.mannequin-head {
+    position: absolute;
+    top: 5px;
+    left: 65px;
+    width: 50px;
+    height: 60px;
+    background: linear-gradient(145deg, #d8c4ae, #927b6b);
+    border-radius: 50%;
+}
+
+.mannequin-neck {
+    position: absolute;
+    top: 60px;
+    left: 80px;
+    width: 20px;
+    height: 28px;
+    background: #b99f89;
+}
+
+.mannequin-body {
+    position: absolute;
+    top: 82px;
+    left: 43px;
+    width: 94px;
+    height: 125px;
+    background: linear-gradient(145deg, #7130a8, #24102f);
+    border: 2px solid #a45bd7;
+    border-radius: 25px 25px 12px 12px;
+}
+
+.mannequin-arm {
+    position: absolute;
+    top: 92px;
+    width: 25px;
+    height: 125px;
+    background: linear-gradient(90deg, #c6ad98, #8d7665);
+    border-radius: 18px;
+}
+
+.mannequin-arm-left {
+    left: 20px;
+    transform: rotate(9deg);
+}
+
+.mannequin-arm-right {
+    right: 20px;
+    transform: rotate(-9deg);
+}
+
+.mannequin-leg {
+    position: absolute;
+    top: 198px;
+    width: 38px;
+    height: 130px;
+    background: linear-gradient(90deg, #30243b, #17111f);
+    border: 1px solid #7130a8;
+    border-radius: 10px 10px 8px 8px;
+}
+
+.mannequin-leg-left {
+    left: 49px;
+}
+
+.mannequin-leg-right {
+    right: 49px;
+}
+
+.mannequin-label {
+    margin-top: 10px;
+    color: #c58aff;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+#outfit-preview-items {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    align-content: center;
+}
+
+#outfit-preview-items .outfit-item {
+    padding: 12px;
+    text-align: center;
+    background: #1b1128;
+    border: 1px solid #7130a8;
+    border-radius: 12px;
+}
+
+#outfit-preview-items .outfit-product-image img {
+    max-width: 100%;
+    max-height: 100px;
+    object-fit: contain;
+}
+
+#outfit-preview-items .outfit-item p {
+    color: white;
+    font-weight: bold;
+    margin: 8px 0 4px;
+}
+
+#outfit-preview-items .outfit-item small {
+    color: #c58aff;
+}
+
+/* MOBILE LAYOUT */
+@media (max-width: 650px) {
+    .complete-look-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .mannequin-area {
+        min-height: 350px;
+    }
+
+    #outfit-preview-items {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
