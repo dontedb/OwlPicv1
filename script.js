@@ -329,6 +329,7 @@ container.innerHTML = "";
         `Total votes: ${total}`;
 }
 
+
 function displayOutfitPreview() {
     const container = document.getElementById("outfit-preview-items");
 
@@ -336,16 +337,44 @@ function displayOutfitPreview() {
 
     container.innerHTML = "";
 
-    container.innerHTML = "";
+    // Get the community winner from every category.
+    const winningProducts = categories.map(category => ({
+        category: category,
+        product: getWinner(category)
+    }));
 
-    categories.forEach(category => {
-        const selectedProductId = selectedVotes[category.id];
+    // Compare the winning shoes and cleats.
+    const shoesWinner = winningProducts.find(
+        item => item.category.id === "shoes"
+    );
 
-        if (!selectedProductId) return;
+    const cleatsWinner = winningProducts.find(
+        item => item.category.id === "cleats"
+    );
 
-        const product = findProduct(selectedProductId);
+    const shoesVotes = shoesWinner
+        ? (votes[shoesWinner.product.id] || 0)
+        : -1;
 
-        if (!product) return;
+    const cleatsVotes = cleatsWinner
+        ? (votes[cleatsWinner.product.id] || 0)
+        : -1;
+
+    // Display only the footwear category with more votes.
+    const footwearCategory = shoesVotes >= cleatsVotes
+        ? "shoes"
+        : "cleats";
+
+    // Build the community Winning Look.
+    winningProducts.forEach(({ category, product }) => {
+
+        // Never show shoes and cleats together.
+        if (
+            (category.id === "shoes" || category.id === "cleats") &&
+            category.id !== footwearCategory
+        ) {
+            return;
+        }
 
         const item = document.createElement("div");
 
@@ -356,6 +385,7 @@ function displayOutfitPreview() {
                 ${imageHTML(product)}
             </div>
             <p>${product.name}</p>
+            <small>${votes[product.id] || 0} votes</small>
         `;
 
         container.appendChild(item);
