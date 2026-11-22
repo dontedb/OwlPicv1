@@ -1209,6 +1209,45 @@ footer .hashtag {
     background: #b99f89;
 }
 
+/* OWL PIC - CLOTHING DISPLAY WITHOUT A PERSON */
+
+.ghost-mannequin-look {
+    display: block;
+}
+
+.ghost-mannequin-look #outfit-preview-items {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.ghost-mannequin-look #outfit-preview-items .outfit-item {
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ghost-mannequin-look .outfit-product-image {
+    min-height: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ghost-mannequin-look .outfit-product-image img {
+    max-height: 140px;
+    width: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 650px) {
+    .ghost-mannequin-look #outfit-preview-items {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 .mannequin-body {
     position: absolute;
     top: 82px;
