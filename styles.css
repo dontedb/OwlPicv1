@@ -1451,31 +1451,28 @@ footer .hashtag {
     overflow: hidden;
 }
 
-.complete-look-layout::before {
-    content: "";
-    position: absolute;
-    inset: -25px;
-    z-index: -1;
-    pointer-events: none;
 
+.complete-look-layout {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     background:
         radial-gradient(
-            ellipse at 20% 35%,
-            rgba(155, 50, 255, 0.45),
-            transparent 55%
+            ellipse at 15% 30%,
+            rgba(170, 40, 255, 0.55),
+            transparent 45%
         ),
         radial-gradient(
-            ellipse at 80% 65%,
-            rgba(100, 20, 200, 0.40),
-            transparent 55%
+            ellipse at 85% 70%,
+            rgba(110, 0, 220, 0.50),
+            transparent 45%
         ),
         radial-gradient(
             ellipse at 50% 50%,
-            rgba(190, 100, 255, 0.25),
-            transparent 65%
-        );
-
-    filter: blur(24px);
+            rgba(190, 80, 255, 0.35),
+            transparent 60%
+        ),
+        #100b1a;
 }
 
 /* GLOWING PURPLE CROWN */
