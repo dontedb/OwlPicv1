@@ -1351,3 +1351,91 @@ footer .hashtag {
     }
 }
 
+/* =================================
+   OWL PIC - MOBILE RESPONSIVENESS
+   ================================= */
+
+@media screen and (max-width: 768px) {
+
+    /* Prevent the page from stretching sideways */
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Make main sections fit the phone screen */
+    .container,
+    main,
+    section {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Keep content inside its section */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    /* Make images fit smaller screens */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Make the Complete Look fit the phone */
+    .complete-look-layout {
+        width: 100%;
+        max-width: 100%;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #outfit-preview-items {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Make product cards fit the screen */
+    .outfit-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .outfit-item {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .outfit-product-image img {
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    /* Make buttons easier to use on phones */
+    button {
+        max-width: 100%;
+    }
+
+}
+
+/* Smaller phones */
+@media screen and (max-width: 480px) {
+
+    .outfit-preview {
+        padding: 12px;
+    }
+
+    .outfit-preview-heading h2 {
+        font-size: 20px;
+    }
+
+    .outfit-grid {
+        gap: 8px;
+    }
+
+}
+
