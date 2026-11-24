@@ -1602,4 +1602,7 @@ footer .hashtag {
         font-size: 32px;
     }
 }
-
+.complete-look-layout > * {
+    position: relative;
+    z-index: 1;
+}
