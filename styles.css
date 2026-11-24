@@ -1606,3 +1606,21 @@ footer .hashtag {
     position: relative;
     z-index: 1;
 }
+/* OWL PIC - CENTER COMPLETE LOOK */
+
+.complete-look-layout.ghost-mannequin-look {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.ghost-mannequin-look #outfit-preview-items {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    justify-content: center;
+    justify-items: center;
+}
