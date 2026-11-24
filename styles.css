@@ -1606,21 +1606,56 @@ footer .hashtag {
     position: relative;
     z-index: 1;
 }
-/* OWL PIC - CENTER COMPLETE LOOK */
+/* =====================================
+   OWL PIC - CENTERED SMOKE OVERLAY
+   YOUR COMPLETE LOOK ONLY
+===================================== */
 
 .complete-look-layout.ghost-mannequin-look {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    justify-items: center;
-    align-items: center;
-    width: 100%;
-    gap: 15px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
 }
 
-.ghost-mannequin-look #outfit-preview-items {
+/* SMOKE VIDEO - FLOATING IN CENTER */
+.complete-look-layout.ghost-mannequin-look .smoke-video {
+    position: absolute;
+    display: block;
+
+    width: 70%;
+    height: 70%;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    object-fit: contain;
+
+    opacity: 0.18;
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* CLOTHING STAYS ABOVE SMOKE */
+.complete-look-layout.ghost-mannequin-look #outfit-preview-items {
+    position: relative;
+    z-index: 2;
     width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    justify-content: center;
-    justify-items: center;
+}
+
+/* REMOVE OLD SIMULATED SMOKE */
+.complete-look-layout::before,
+.complete-look-layout::after {
+    content: none;
+}
+
+/* MOBILE */
+@media (max-width: 650px) {
+    .complete-look-layout.ghost-mannequin-look .smoke-video {
+        width: 90%;
+        height: 65%;
+        opacity: 0.12;
+    }
 }
