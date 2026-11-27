@@ -1796,3 +1796,20 @@ footer .hashtag {
         max-height: 105px;
     }
 }
+
+/* SOCKS DIRECTLY ABOVE FOOTWEAR */
+.complete-look-layout.ghost-mannequin-look
+#outfit-preview-items {
+    grid-template-areas:
+        ". hats ."
+        "gloves jacket shirts"
+        ". pants ."
+        ". socks ."
+        ". shoes .";
+}
+
+/* Shoes and cleats share the bottom position */
+.complete-look-layout.ghost-mannequin-look
+.outfit-cleats {
+    grid-area: shoes;
+}
