@@ -304,17 +304,118 @@
 <!-- END SHOW OFF YOUR LOOK -->
 
 <!-- MUSIC SECTION -->
+
+<!-- OWL PIC MUSIC ZONE -->
 <section class="music-section" id="music">
+
     <div class="section-heading">
-        <h2>♫ MUSIC</h2>
-        <p>Vote for your favorite artist or song!</p>
+        <h2>♫ OWL PIC MUSIC ZONE</h2>
+        <p>Discover new music. Support artists. Let the community decide.</p>
     </div>
 
-    <div id="music-list" class="music-grid">
-        <!-- JavaScript adds music voting cards here -->
+    <!-- SUBMIT MUSIC -->
+    <div class="music-submit-area">
+
+        <h3>🎤 SUBMIT YOUR MUSIC</h3>
+        <p>
+            Share a song that is already available on Spotify,
+            YouTube, SoundCloud, Apple Music, or another music platform.
+        </p>
+
+        <form id="music-submission-form">
+
+            <label for="music-genre">Music Genre</label>
+            <input
+                type="text"
+                id="music-genre"
+                list="owl-music-genres"
+                placeholder="Choose or type a genre"
+                required
+                maxlength="60"
+            >
+
+            <datalist id="owl-music-genres">
+                <option value="Hip-Hop / Rap">
+                <option value="R&B / Soul">
+                <option value="Gospel / Christian">
+                <option value="Afrobeats / African">
+                <option value="Pop">
+                <option value="Rock / Alternative">
+                <option value="Country">
+                <option value="Jazz">
+                <option value="Blues">
+                <option value="Reggae / Dancehall">
+                <option value="Latin / Reggaeton">
+                <option value="Electronic / EDM">
+                <option value="House / Techno">
+                <option value="Classical">
+                <option value="Indie">
+                <option value="Metal / Punk">
+                <option value="Folk">
+                <option value="K-Pop / J-Pop">
+                <option value="Dance">
+                <option value="Soundtracks">
+                <option value="Other / Independent">
+            </datalist>
+
+            <label for="music-title">Song Title</label>
+            <input
+                type="text"
+                id="music-title"
+                placeholder="Enter song title"
+                required
+                maxlength="120"
+            >
+
+            <label for="music-artist">Artist Name</label>
+            <input
+                type="text"
+                id="music-artist"
+                placeholder="Enter artist name"
+                required
+                maxlength="120"
+            >
+
+            <label for="music-link">Official Listening Link</label>
+            <input
+                type="url"
+                id="music-link"
+                placeholder="Paste Spotify, YouTube, SoundCloud, or Apple Music link"
+                required
+            >
+
+            <button type="submit">
+                SUBMIT MUSIC
+            </button>
+
+            <p id="music-submission-message" aria-live="polite"></p>
+
+        </form>
+
+        <p class="music-rights-note">
+            OWL PIC does not host or upload audio. Submissions link to
+            music hosted on external platforms.
+        </p>
+
     </div>
+
+    <!-- MUSIC GENRE LISTINGS -->
+    <div class="music-discover-area">
+
+        <div class="section-heading">
+            <h3>🔥 DISCOVER & VOTE</h3>
+            <p>Explore music from every genre and support your favorites.</p>
+        </div>
+
+        <div id="music-list" class="music-grid">
+            <!-- JavaScript will display submitted music here -->
+        </div>
+
+    </div>
+
 </section>
-<!-- END MUSIC SECTION -->
+<!-- END OWL PIC MUSIC ZONE -->
+
 
         </footer>
     </main>
