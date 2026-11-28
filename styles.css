@@ -1813,3 +1813,100 @@ footer .hashtag {
 .outfit-cleats {
     grid-area: shoes;
 }
+
+/* =====================================
+   OWL PIC MUSIC SUBMISSION CENTER
+===================================== */
+
+.music-submit-area {
+    max-width: 750px;
+    margin: 0 auto 45px;
+    padding: 25px;
+    background: rgba(12, 8, 19, 0.9);
+    border: 1px solid #7130a8;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(155, 77, 255, 0.15);
+}
+
+.music-submit-area h3 {
+    color: #e2a5ff;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.music-submit-area > p {
+    color: #bba9c7;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+#music-submission-form {
+    display: grid;
+    gap: 12px;
+}
+
+#music-submission-form label {
+    color: #e8d5f5;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#music-submission-form input {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    color: white;
+    background: #100b18;
+    border: 1px solid #57316e;
+    border-radius: 9px;
+    outline: none;
+    font-size: 14px;
+}
+
+#music-submission-form input:focus {
+    border-color: #d15aff;
+    box-shadow: 0 0 12px rgba(209, 90, 255, 0.3);
+}
+
+#music-submission-form button {
+    min-height: 48px;
+    margin-top: 10px;
+    color: white;
+    font-weight: 900;
+    letter-spacing: 1px;
+    background: linear-gradient(100deg, #7022b5, #bd42ed);
+    border: 1px solid #d98aff;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+#music-submission-form button:hover {
+    box-shadow: 0 0 18px rgba(209, 90, 255, 0.5);
+}
+
+#music-submission-message {
+    color: #e2a5ff;
+    font-size: 13px;
+}
+
+.music-rights-note {
+    margin-top: 18px;
+    color: #9f91aa;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.music-discover-area {
+    margin-top: 35px;
+}
+
+.music-discover-area .section-heading {
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .music-submit-area {
+        padding: 18px;
+    }
+}
